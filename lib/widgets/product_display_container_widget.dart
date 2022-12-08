@@ -47,7 +47,7 @@ class ProductDisplayContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(imagePath, height: 109, width: 118),
+              Image.network('http://fajar.basecampskripsi.xyz/foto/'+imagePath, height: 109, width: 118),
               const SizedBox(
                 height: 8,
               ),
@@ -59,7 +59,7 @@ class ProductDisplayContainer extends StatelessWidget {
               ),
               _addRatingWidget(addRating!),
               TextWidget(
-                txt: newPrice,
+                txt: newPrice.toString(),
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
                 textColor: AppConstants.primaryColor,
@@ -67,7 +67,7 @@ class ProductDisplayContainer extends StatelessWidget {
               Row(
                 children: [
                   TextWidget(
-                    txt: oldPrice,
+                    txt: oldPrice.toString(),
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
                     textColor: AppConstants.subTxtColor,
@@ -77,7 +77,7 @@ class ProductDisplayContainer extends StatelessWidget {
                     width: 8,
                   ),
                   TextWidget(
-                      txt: discount,
+                      txt: discount.toString(),
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       textColor: AppConstants.redColor),

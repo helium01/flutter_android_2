@@ -54,11 +54,11 @@ class _ListCategoryState extends State<ListCategory> {
               ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: _lists.categoriesList.length,
+                  itemCount: _lists.kategotiList.length,
                   itemBuilder: (context, index) {
                     return CategoryListTile(
-                      imagePath: _lists.categoriesList[index].imagePath,
-                      categoryName: _lists.categoriesList[index].categoryName,
+                      imagePath: _lists.kategotiList[index].foto,
+                      categoryName: _lists.kategotiList[index].nama_kategori,
                     );
                   })
             ],

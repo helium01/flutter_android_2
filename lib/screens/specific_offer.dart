@@ -74,21 +74,21 @@ class SpecificOffer extends StatelessWidget {
                     ),
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: _lists.recomendedProductList.length,
+                    itemCount: _lists.bungaList.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: ProductDisplayContainer(
                           imagePath:
-                              _lists.recomendedProductList[index].imagePath,
+                              _lists.bungaList[index].foto,
                           newPrice:
-                              _lists.recomendedProductList[index].newPrice,
+                              _lists.bungaList[index].harga_akhir,
                           oldPrice:
-                              _lists.recomendedProductList[index].oldPrice,
+                              _lists.bungaList[index].harga,
                           discount:
-                              _lists.recomendedProductList[index].discount,
+                              _lists.bungaList[index].diskon,
                           productName:
-                              _lists.recomendedProductList[index].productName,
+                              _lists.bungaList[index].nama_barang,
                           addRating: true,
                           margin: 0,
                         ),

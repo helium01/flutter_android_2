@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/api/api.dart';
+import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/favorite_product.dart';
 import 'package:phileaflorist/screens/notifications.dart';
 import 'package:phileaflorist/screens/search.dart';
@@ -12,12 +14,21 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatelessWidget {
   final _bannerController = PageController();
-  final _lists = AllLists();
+   repoBunga repobunga =repoBunga();
+  late Future<List<Bunga>> listBunga;
+  repoGaleri repogaleri=repoGaleri();
+  late Future<List<Galeri>> listGaleri;
+ 
+ 
+  
+
 
   Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+     listBunga=repobunga.getDataBunga();
+     listGaleri=repogaleri.getDataGaleri();
     return Scaffold(
       backgroundColor: AppConstants.whiteColor,
       body: SingleChildScrollView(
@@ -111,21 +122,63 @@ class Home extends StatelessWidget {
               ),
               SizedBox(
                 height: 190,
-                child: PageView.builder(
+                child:FutureBuilder<List<Galeri>>(
+                  future: listGaleri,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      List<Galeri> isidata=snapshot.data!;
+                      return PageView.builder(
                     physics: const BouncingScrollPhysics(),
                     controller: _bannerController,
-                    itemCount: 5,
+                    itemCount: isidata.length,
                     itemBuilder: (context, index) {
-                      return const OfferBanner();
-                    }),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Stack(
+                          children: [
+                            Image.network(
+                              "http://fajar.basecampskripsi.xyz/foto/"+isidata[index].foto,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 24, top: 32),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TextWidget(
+                                    txt: "Philea Florist",
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    textColor: AppConstants.whiteColor,
+                                  ),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+                    }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                  },)
               ),
               const SizedBox(
                 height: 16,
               ),
-              Center(
+              FutureBuilder<List<Galeri>>(
+                future: listGaleri,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      List<Galeri> isidata=snapshot.data!;
+                      return Center(
                 child: SmoothPageIndicator(
                   controller: _bannerController,
-                  count: 5,
+                  count: isidata.length,
                   effect: const WormEffect(
                       dotHeight: 8,
                       dotWidth: 8,
@@ -134,7 +187,15 @@ class Home extends StatelessWidget {
                       // strokeWidth: 5,
                       ),
                 ),
+              );
+              }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+              }
               ),
+              
+              
               
               const SizedBox(
                 height: 12,
@@ -167,20 +228,30 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: SizedBox(
                   height: 244,
-                  child: ListView.builder(
+                  child: FutureBuilder<List<Bunga>>(
+                    future: listBunga,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        List<Bunga> isiData =snapshot.data!;
+                        return ListView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: _lists.flashSaleList.length,
+                      itemCount: isiData.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
                           margin: 16,
-                          imagePath: _lists.flashSaleList[index].imagePath,
-                          newPrice: _lists.flashSaleList[index].newPrice,
-                          oldPrice: _lists.flashSaleList[index].oldPrice,
-                          discount: _lists.flashSaleList[index].discount,
-                          productName: _lists.flashSaleList[index].productName,
+                          imagePath: isiData[index].foto,
+                          newPrice: isiData[index].harga_akhir,
+                          oldPrice: isiData[index].harga,
+                          discount: isiData[index].diskon,
+                          productName: isiData[index].nama_barang,
                         );
-                      }),
+                      });
+                      }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
                 ),
               ),
               Padding(
@@ -210,20 +281,30 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16, bottom: 9),
                 child: SizedBox(
                   height: 244,
-                  child: ListView.builder(
+                  child: FutureBuilder<List<Bunga>>(
+                    future: listBunga,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        List<Bunga> isiData =snapshot.data!;
+                        return ListView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: _lists.megaSaleList.length,
+                      itemCount: isiData.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
-                          imagePath: _lists.megaSaleList[index].imagePath,
-                          newPrice: _lists.megaSaleList[index].newPrice,
-                          oldPrice: _lists.megaSaleList[index].oldPrice,
-                          discount: _lists.megaSaleList[index].discount,
-                          productName: _lists.megaSaleList[index].productName,
                           margin: 16,
+                          imagePath: isiData[index].foto,
+                          newPrice: isiData[index].harga_akhir,
+                          oldPrice: isiData[index].harga,
+                          discount: isiData[index].diskon,
+                          productName: isiData[index].nama_barang,
                         );
-                      }),
+                      });
+                      }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
                 ),
               ),
               Padding(
@@ -270,34 +351,29 @@ class Home extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      mainAxisExtent: 268,
-                    ),
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: _lists.recomendedProductList.length - 2,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: ProductDisplayContainer(
-                          imagePath:
-                              _lists.recomendedProductList[index].imagePath,
-                          newPrice:
-                              _lists.recomendedProductList[index].newPrice,
-                          oldPrice:
-                              _lists.recomendedProductList[index].oldPrice,
-                          discount:
-                              _lists.recomendedProductList[index].discount,
-                          productName:
-                              _lists.recomendedProductList[index].productName,
-                          addRating: true,
-                          margin: 0,
-                        ),
-                      );
+                child: FutureBuilder<List<Bunga>>(
+                    future: listBunga,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        List<Bunga> isiData =snapshot.data!;
+                        return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: isiData.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return ProductDisplayContainer(
+                          margin: 16,
+                          imagePath: isiData[index].foto,
+                          newPrice: isiData[index].harga_akhir,
+                          oldPrice: isiData[index].harga,
+                          discount: isiData[index].diskon,
+                          productName: isiData[index].nama_barang,
+                        );
+                      });
+                      }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
                     }),
               ),
               const SizedBox(

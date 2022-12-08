@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/search.dart';
 
 import '../utils/all_lists.dart';
@@ -12,6 +13,8 @@ import 'notifications.dart';
 class Explore extends StatelessWidget {
   final _lists = AllLists();
 
+ 
+ 
   Explore({Key? key}) : super(key: key);
 
   @override
@@ -124,12 +127,12 @@ class Explore extends StatelessWidget {
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: _lists.manFashionList.length,
+                      itemCount: _lists.bungaList.length,
                       itemBuilder: (context, index) {
                         return CategoryContainer(
                           categoryName:
-                              _lists.manFashionList[index].categoryName,
-                          imagePath: _lists.manFashionList[index].imagePath,
+                              _lists.bungaList[index].nama_barang,
+                          imagePath: _lists.bungaList[index].foto,
                         );
                       },
                       gridDelegate:

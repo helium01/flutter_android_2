@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/api/api.dart';
 
 import '../models/category_model.dart';
 import '../models/product_display_model.dart';
@@ -6,235 +7,15 @@ import '../models/select_colors_model.dart';
 import '../models/select_sizes_model.dart';
 
 class AllLists {
-  List<CategoryModel> categoriesList = [
-    CategoryModel(
-        imagePath: "assets/images/manshirt.png", categoryName: "Man Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/womandress.png", categoryName: "Dress"),
-    CategoryModel(
-        imagePath: "assets/images/manbag.png",
-        categoryName: "Man Work Equipment"),
-    CategoryModel(
-        imagePath: "assets/images/manpants.png", categoryName: "Man Pants"),
-    CategoryModel(
-        imagePath: "assets/images/mantshirt.png", categoryName: "Man T-Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/womanbikini.png", categoryName: "Bikini"),
-    CategoryModel(
-        imagePath: "assets/images/womanbag.png", categoryName: "Woman Bag"),
-    CategoryModel(
-        imagePath: "assets/images/manshirt.png", categoryName: "Man Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/womanshoes.png", categoryName: "High Heels"),
-    CategoryModel(
-        imagePath: "assets/images/womanpants.png", categoryName: "Woman Pants"),
-    CategoryModel(
-        imagePath: "assets/images/womandress.png", categoryName: "Dress"),
-    CategoryModel(
-        imagePath: "assets/images/womanbag.png", categoryName: "Woman Bag"),
-    CategoryModel(
-        imagePath: "assets/images/manshirt.png", categoryName: "Man Shirt"),
-  ];
-  List<CategoryModel> manFashionList = [
-    CategoryModel(
-        imagePath: "assets/images/manshirt.png", categoryName: "Man Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/manbag.png",
-        categoryName: "Man Work Equipment"),
-    CategoryModel(
-        imagePath: "assets/images/mantshirt.png", categoryName: "Man T-Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/manshoes.png", categoryName: "Man Shoes"),
-    CategoryModel(
-        imagePath: "assets/images/womanskirt.png", categoryName: "Skirt"),
-    CategoryModel(
-        imagePath: "assets/images/manpants.png", categoryName: "Man Pants"),
-  ];
-  List<CategoryModel> womanFashionList = [
-    CategoryModel(
-        imagePath: "assets/images/womandress.png", categoryName: "Dress"),
-    CategoryModel(
-        imagePath: "assets/images/womantshirt.png",
-        categoryName: "Woman T-Shirt"),
-    CategoryModel(
-        imagePath: "assets/images/womanpants.png", categoryName: "Woman Pants"),
-    CategoryModel(
-        imagePath: "assets/images/womanskirt.png", categoryName: "Skirt"),
-    CategoryModel(
-        imagePath: "assets/images/womanbag.png", categoryName: "Woman Bag"),
-    CategoryModel(
-        imagePath: "assets/images/womanshoes.png", categoryName: "High Heels"),
-    CategoryModel(
-        imagePath: "assets/images/womanbikini.png", categoryName: "Bikini"),
-  ];
-  List<ProductDisplayModel> flashSaleList = [
-   ProductDisplayModel(
-        imagePath: "assets/bunga/bunga1.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "\$534,33",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/meja1.jpeg",
-        productName: "bunga meja",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/papan1.jpeg",
-        productName: "bunga papan",
-        newPrice: "Rp. 900.000",
-        oldPrice: "Rp. 1000.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga5.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-  ];
-  List<ProductDisplayModel> megaSaleList = [
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga1.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "\$534,33",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/meja1.jpeg",
-        productName: "bunga meja",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/papan1.jpeg",
-        productName: "bunga papan",
-        newPrice: "Rp. 900.000",
-        oldPrice: "Rp. 1000.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga5.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-  ];
-  List<ProductDisplayModel> recomendedProductList = [
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga1.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "\$534,33",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/meja1.jpeg",
-        productName: "bunga meja",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/papan1.jpeg",
-        productName: "bunga papan",
-        newPrice: "Rp. 900.000",
-        oldPrice: "Rp. 1000.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga5.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-  ];
-  List<ProductDisplayModel> resultProductList = [
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/shoe4.png",
-    //     productName: "FS - QUILTED\nMAXI CROS...",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/shoe3.png",
-    //     productName: "FS - Nike Air\nMax 270 React...",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/purse3.png",
-    //     productName: "Nike Air Max 270\nReact ENG",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/shoe2.png",
-    //     productName: "Nike Air Max 270\nReact ENG",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/shoe2.png",
-    //     productName: "Nike Air Max 270\nReact ENG",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-    // ProductDisplayModel(
-    //     imagePath: "assets/images/shoe2.png",
-    //     productName: "Nike Air Max 270\nReact ENG",
-    //     newPrice: "\$299,43",
-    //     oldPrice: "\$534,33",
-    //     discount: "24% Off"),
-  ];
-  List<ProductDisplayModel> resultProductListFull = [
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga1.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "\$534,33",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/meja1.jpeg",
-        productName: "bunga meja",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/papan1.jpeg",
-        productName: "bunga papan",
-        newPrice: "Rp. 900.000",
-        oldPrice: "Rp. 1000.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga5.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-  ];
-  List<ProductDisplayModel> favouriteProductsList = [
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga1.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "\$534,33",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/meja1.jpeg",
-        productName: "bunga meja",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/papan1.jpeg",
-        productName: "bunga papan",
-        newPrice: "Rp. 900.000",
-        oldPrice: "Rp. 1000.000",
-        discount: "24% Off"),
-    ProductDisplayModel(
-        imagePath: "assets/bunga/bunga5.jpeg",
-        productName: "bunga salib",
-        newPrice: "Rp. 500.000",
-        oldPrice: "Rp. 700.000",
-        discount: "24% Off"),
-  ];
+  
+
+  List<Bunga> bungaList = [ ];
+  List<Galeri> galeriList = [ ];
+  List<Kategori> kategotiList = [];
+  List<Keranjang> keranjangList = [];
+  List<Kontak> kontakList = [];
+  List<Profil> profilList = [];
+  List<Testimoni> testimoniList = [];
 
   List<SelectSizesModel> sizesList = [
     SelectSizesModel(size: "6", isSelected: false),
@@ -256,11 +37,13 @@ class AllLists {
     SelectColorsModel(color: Colors.blueGrey, isSelected: false),
     SelectColorsModel(color: Colors.indigoAccent, isSelected: false),
   ];
+  // diisikan dari gambar barang
   List<String> productImagesList = [
     "assets/images/productimage2.png",
     "assets/images/productimage3.png",
     "assets/images/productimage4.png",
   ];
+  // diisikan dari kategori
   List<String> searchList = [
     "Bunga Papan ",
     "Bunga Bucket",

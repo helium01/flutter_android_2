@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:phileaflorist/repository/repobunga.dart';
+import 'package:phileaflorist/utils/all_lists.dart';
 import 'package:phileaflorist/utils/app_constants.dart';
 
+import '../api/api.dart';
 import '../screens/account.dart';
 import '../screens/cart.dart';
 import '../screens/explore.dart';
@@ -24,6 +27,43 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Offer(),
     Account(),
   ];
+  final _lists = AllLists();
+
+  repoBunga repobunga =repoBunga();
+  late Future<List<Bunga>> listBunga;
+  getDataB()async{
+    _lists.bungaList=await repobunga.getDataBunga();
+    
+  }
+  repoGaleri repogaleri = repoGaleri();
+  getDataG()async{
+    _lists.galeriList= await repogaleri.getDataGaleri();
+  }
+
+  repoKategori repokategori =repoKategori();
+  getDataK()async{
+    _lists.kategotiList=await repokategori.getDataKategori();
+  }
+  repoKeranjang repokeranjang =repoKeranjang();
+  getDataKe()async{
+    _lists.keranjangList=await repokeranjang.getDataKeranjang();
+  }
+  repoProfil repoprofil =repoProfil();
+  getDataP()async{
+    _lists.profilList=await repoprofil.getDataProfil();
+  }
+
+@override
+void initState() { 
+  getDataB();
+  getDataG();
+  getDataK();
+  getDataKe();
+  getDataP();
+  super.initState();
+  listBunga=repobunga.getDataBunga();
+  
+}
 
   int _selectedIndex = 0;
 

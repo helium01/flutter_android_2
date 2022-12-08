@@ -19,7 +19,7 @@ class SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int result = _lists.resultProductList.length;
+    int result = _lists.bungaList.length;
     return Scaffold(
       backgroundColor: AppConstants.whiteColor,
       body: SafeArea(
@@ -140,16 +140,16 @@ class SearchResults extends StatelessWidget {
             ),
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemCount: _lists.resultProductList.length,
+            itemCount: _lists.bungaList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: ProductDisplayContainer(
-                  imagePath: _lists.resultProductList[index].imagePath,
-                  newPrice: _lists.resultProductList[index].newPrice,
-                  oldPrice: _lists.resultProductList[index].oldPrice,
-                  discount: _lists.resultProductList[index].discount,
-                  productName: _lists.resultProductList[index].productName,
+                  imagePath: _lists.bungaList[index].foto,
+                  newPrice: _lists.bungaList[index].harga_akhir,
+                  oldPrice: _lists.bungaList[index].harga,
+                  discount: _lists.bungaList[index].diskon,
+                  productName: _lists.bungaList[index].nama_barang,
                   addRating: true,
                   margin: 0,
                 ),

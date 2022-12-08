@@ -64,21 +64,21 @@ class FavoriteProduct extends StatelessWidget {
                     ),
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: _lists.favouriteProductsList.length,
+                    itemCount: _lists.bungaList.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: ProductDisplayContainer(
                           imagePath:
-                              _lists.favouriteProductsList[index].imagePath,
+                              _lists.bungaList[index].foto,
                           newPrice:
-                              _lists.favouriteProductsList[index].newPrice,
+                              _lists.bungaList[index].harga_akhir,
                           oldPrice:
-                              _lists.favouriteProductsList[index].oldPrice,
+                              _lists.bungaList[index].harga,
                           discount:
-                              _lists.favouriteProductsList[index].discount,
+                              _lists.bungaList[index].diskon,
                           productName:
-                              _lists.favouriteProductsList[index].productName,
+                              _lists.bungaList[index].nama_barang,
                           addRating: true,
                           addDeleteButton: true,
                           margin: 0,
