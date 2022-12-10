@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:phileaflorist/api/api.dart';
 class repoBunga{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/barang';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/barang';
 
   Future<List<Bunga>> getDataBunga()async{
     
@@ -11,7 +12,7 @@ class repoBunga{
 
       if(response.statusCode==200){
         List bunga=json.decode(response.body)['data'];
-       
+      //  print(bunga);
         // // print(response);
         // Iterable it =jsonDecode(response.body);
         // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
@@ -22,7 +23,7 @@ class repoBunga{
   }
 }
 class repoKategori{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/kategori';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/kategori';
 
   Future<List<Kategori>> getDataKategori()async{
     
@@ -41,11 +42,11 @@ class repoKategori{
   }
 }
 class repoKeranjang{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/keranjang';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/keranjang';
 
-  Future<List<Keranjang>> getDataKeranjang()async{
+  Future<List<Keranjang>> getDataKeranjang(apiUrl)async{
     
-      final response=await http.get(Uri.parse(baseUrl));
+      final response=await http.get(Uri.parse(baseUrl+apiUrl));
 
       if(response.statusCode==200){
         List keranjang=json.decode(response.body)['data'];
@@ -60,7 +61,7 @@ class repoKeranjang{
   }
 }
 class repoKontak{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/kontak';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/kontak';
 
   Future<List<Kontak>> getDataKontak()async{
     
@@ -79,7 +80,7 @@ class repoKontak{
   }
 }
 class repoProfil{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/profil';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/profil';
 
   Future<List<Profil>> getDataProfil()async{
     
@@ -98,7 +99,7 @@ class repoProfil{
   }
 }
 class repoGaleri{
-  final baseUrl='http://fajar.basecampskripsi.xyz/api/v1/galeri';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/galeri';
 
   Future<List<Galeri>> getDataGaleri()async{
     
@@ -115,4 +116,52 @@ class repoGaleri{
         throw Exception('failed to load data');
       }
   }
+}
+class Network{
+  final String _url = 'http://fajar.patusaninc.com/api/v1/auth';
+  var token;
+
+  _getToken() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+  var userJson = localStorage.getString('token');
+    // token = json.decode(userJson.toString());
+  token = localStorage.getString('token');
+    print(token);
+  }
+
+  authDataPost(data, apiUrl) async {
+    // print("indonesia merdeka");
+    var fullUrl = _url + apiUrl;
+    print(fullUrl);
+    return await http.post(
+        Uri.parse(fullUrl),
+        body: jsonEncode(data),
+        headers: _setHeaders()
+    );
+  }
+  authDataGet(apiUrl) async{
+    var fulUrl=_url+apiUrl;
+    return await http.post(
+      Uri.parse(fulUrl),
+      headers: _setHeaders(),
+      );
+  }
+
+  getData(apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    // print(fullUrl);
+    await _getToken();
+    print(_setHeaders());
+    return await http.post(
+         Uri.parse(fullUrl),
+        headers: _setHeaders()
+    );
+  }
+
+  _setHeaders() => {
+    'Content-type' : 'application/json',
+    'Accept' : 'application/json',
+    'Authorization' : 'Bearer $token'
+  };
+
 }

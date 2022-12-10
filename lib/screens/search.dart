@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/screens/search_results.dart';
 import 'package:phileaflorist/widgets/Text_widget.dart';
 
@@ -22,10 +23,24 @@ class Search extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
                 child: Row(
-                  children: const [
+                  children: [
+                    TextButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Home()
+                    ),
+                  );
+                    }, child:  Icon(
+                      Icons.arrow_back_ios,
+                      color: AppConstants.subTxtColor,
+                      size: 18,
+                    ),),
                     Expanded(
                       child: TextFormFieldWidget(
                         hintText: "Search Product",

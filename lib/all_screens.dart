@@ -61,7 +61,7 @@ class AllScreens extends StatelessWidget {
                     buttonText: "SignUp",
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SignUp()));
+                          MaterialPageRoute(builder: (context) => Register()));
                     }),
                 SizedBox(
                   height: 20,

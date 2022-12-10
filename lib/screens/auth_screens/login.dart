@@ -1,210 +1,196 @@
-
-
-import 'package:phileaflorist/screens/auth_screens/signup.dart';
-
-import '../../utils/app_constants.dart';
-import '../../widgets/Text_form_field_widget.dart';
-import '../../widgets/Text_widget.dart';
-import '../../widgets/bottom_navigation.dart';
-import '../../widgets/button_widget.dart';
-
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/repository/repobunga.dart';
+import 'package:phileaflorist/screens/auth_screens/akun/profile/profile.dart';
+import 'package:phileaflorist/screens/auth_screens/signup.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget{
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login>{
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
+  var email, password;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _secureText = true;
 
-  Login({Key? key}) : super(key: key);
+  showHide(){
+    setState(() {
+      _secureText = !_secureText;
+    });
+  }
+
+  _showMsg(msg) {
+    final snackBar = SnackBar(
+      content: Text(msg),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: AppConstants.whiteColor,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 112, left: 16, right: 16),
-          child: Center(
-            child: Form(
-              key: _formKey,
-              child: Column(
+      key: _scaffoldKey,
+      backgroundColor: Color(0xff151515),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 28, vertical: 72),
+          child: Column(
+            children: [
+              Card(
+                elevation: 4.0,
+                color: Colors.white10,
+                margin: EdgeInsets.only(top: 86),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Login",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 18),
+                        TextFormField(
+                          cursorColor: Colors.blue,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: "Email",
+                          ),
+                          validator: (emailValue){
+                            if(emailValue!.isEmpty){
+                              return 'Please enter your email';
+                            }
+                            email = emailValue;
+                            return null;
+                          }
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          cursorColor: Colors.blue,
+                          keyboardType: TextInputType.text,
+                          obscureText: _secureText,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            suffixIcon: IconButton(
+                              onPressed: showHide,
+                              icon: Icon(_secureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
+                          ),
+                          validator: (passwordValue){
+                            if(passwordValue!.isEmpty){
+                              return 'Please enter your password';
+                            }
+                            password = passwordValue;
+                            return null;
+                          }
+                        ),
+                        SizedBox(height: 12),
+                        ElevatedButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                            child: Text(
+                              _isLoading? 'Proccessing..' : 'Login',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _login();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppConstants.logoBlue,
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const TextWidget(
-                    txt: "Welcome to Philea Florist",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    textColor: AppConstants.titleTextColor,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const TextWidget(
-                    txt: "Masuk untuk Melanjutkan",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    textColor: AppConstants.subTxtColor,
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  TextFormFieldWidget(
-                    hintText: "Your Email",
-                    prefixIcon: Icon(Icons.mail_outline),
-                    maxLines: 1,
-                    minLines: 1,
-                    isPasswordField: false,
-                    validator: (val) {
-                      if (val.isEmpty) {
-                        return "Enter Your Email ";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  TextFormFieldWidget(
-                    maxLines: 1,
-                    minLines: 1,
-                    hintText: "Password",
-                    prefixIcon: Icon(Icons.lock_outline),
-                    isPasswordField: true,
-                    validator: (val) {
-                      if (val.isEmpty) {
-                        return " Oops! Your Password Is Not Correct";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  ButtonWidget(
-                    buttonText: "Sign In",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BottomNavigation()));
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 21,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: AppConstants.txtFieldColor,
-                          height: 1,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 28,
-                      ),
-                      const TextWidget(
-                        txt: "OR",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        textColor: AppConstants.subTxtColor,
-                      ),
-                      const SizedBox(
-                        width: 28,
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: AppConstants.txtFieldColor,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppConstants.txtFieldColor),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ListTile(
-                      leading: AppConstants.googleIcon,
-                      title: const Center(
-                        child: TextWidget(
-                          txt: "Login with Google",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          textColor: AppConstants.subTxtColor,
-                        ),
-                      ),
+                  Text(
+                    "Does'nt have an account? ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppConstants.txtFieldColor),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ListTile(
-                      leading: AppConstants.facebookIcon,
-                      title: const Center(
-                        child: TextWidget(
-                          txt: "Login with facebook",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          textColor: AppConstants.subTxtColor,
-                        ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => Register()));
+                    },
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        decoration: TextDecoration.none,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const TextWidget(
-                    txt: "Forgot Password?",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    textColor: AppConstants.primaryColor,
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const TextWidget(
-                        txt: "Don’t have a account? ",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        textColor: AppConstants.subTxtColor,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp()));
-                        },
-                        child: const TextWidget(
-                          txt: "Register",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          textColor: AppConstants.primaryColor,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
-              ),
-            ),
+              )
+            ],
           ),
         ),
       ),
     );
+  }
+
+  void _login() async{
+    setState(() {
+      _isLoading = true;
+    });
+    var data = {
+      'email' : email,
+      'password' : password
+    };
+  // print("saya");
+    var res =  Network().authDataPost(data, '/login');
+    var body = json.decode(res.body);
+    print(data);
+    print('saya');
+    if(body['data'] != null){
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', json.encode(body['token']));
+      localStorage.setString('user', json.encode(body['user']));
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => Profile()
+          ),
+      );
+    }else{
+      _showMsg(body['message']);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

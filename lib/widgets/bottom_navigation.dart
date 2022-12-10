@@ -46,7 +46,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
   repoKeranjang repokeranjang =repoKeranjang();
   getDataKe()async{
-    _lists.keranjangList=await repokeranjang.getDataKeranjang();
+    _lists.keranjangList=await repokeranjang.getDataKeranjang('/user');
   }
   repoProfil repoprofil =repoProfil();
   getDataP()async{

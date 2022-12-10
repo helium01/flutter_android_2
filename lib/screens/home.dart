@@ -125,6 +125,7 @@ class Home extends StatelessWidget {
                 child:FutureBuilder<List<Galeri>>(
                   future: listGaleri,
                   builder: (context, snapshot) {
+                    print("apa");
                     if(snapshot.hasData){
                       List<Galeri> isidata=snapshot.data!;
                       return PageView.builder(
@@ -137,7 +138,7 @@ class Home extends StatelessWidget {
                         child: Stack(
                           children: [
                             Image.network(
-                              "http://fajar.basecampskripsi.xyz/foto/"+isidata[index].foto,
+                              "http://fajar.patusaninc.com/foto/"+isidata[index].foto,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 24, top: 32),
@@ -241,9 +242,9 @@ class Home extends StatelessWidget {
                         return ProductDisplayContainer(
                           margin: 16,
                           imagePath: isiData[index].foto,
-                          newPrice: isiData[index].harga_akhir,
-                          oldPrice: isiData[index].harga,
-                          discount: isiData[index].diskon,
+                          newPrice: isiData[index].harga_akhir.toString(),
+                          oldPrice: isiData[index].harga.toString(),
+                          discount: isiData[index].diskon.toString(),
                           productName: isiData[index].nama_barang,
                         );
                       });
@@ -294,14 +295,14 @@ class Home extends StatelessWidget {
                         return ProductDisplayContainer(
                           margin: 16,
                           imagePath: isiData[index].foto,
-                          newPrice: isiData[index].harga_akhir,
-                          oldPrice: isiData[index].harga,
-                          discount: isiData[index].diskon,
+                          newPrice: isiData[index].harga_akhir.toString(),
+                          oldPrice: isiData[index].harga.toString(),
+                          discount:  isiData[index].diskon.toString(),
                           productName: isiData[index].nama_barang,
                         );
                       });
                       }else if (snapshot.hasError){
-                        return Text("${snapshot.error}");
+                        return Text("error pak"+"${snapshot.error}");
                       }
                       return const CircularProgressIndicator();
                     }),
@@ -349,33 +350,36 @@ class Home extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: FutureBuilder<List<Bunga>>(
-                    future: listBunga,
-                    builder: (context, snapshot) {
-                      if(snapshot.hasData){
-                        List<Bunga> isiData =snapshot.data!;
-                        return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: isiData.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return ProductDisplayContainer(
-                          margin: 16,
-                          imagePath: isiData[index].foto,
-                          newPrice: isiData[index].harga_akhir,
-                          oldPrice: isiData[index].harga,
-                          discount: isiData[index].diskon,
-                          productName: isiData[index].nama_barang,
-                        );
-                      });
-                      }else if (snapshot.hasError){
-                        return Text("${snapshot.error}");
-                      }
-                      return const CircularProgressIndicator();
-                    }),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(right: 16),
+              //   child: FutureBuilder<List<Bunga>>(
+              //       future: listBunga,
+              //       builder: (context, snapshot) {
+              //         if(snapshot.hasData){
+              //           List<Bunga> isiData =snapshot.data!;
+              //           return ListView.builder(
+              //         physics: const BouncingScrollPhysics(),
+              //         itemCount: isiData.length,
+              //         scrollDirection: Axis.horizontal,
+              //         itemBuilder: (context, index) {
+              //           return Padding(
+              //             padding: const EdgeInsets.only(left: 10),
+              //             child: ProductDisplayContainer(
+              //             margin: 16,
+              //             imagePath: isiData[index].foto,
+              //             newPrice: isiData[index].harga_akhir.toString(),
+              //             oldPrice: isiData[index].harga.toString(),
+              //             discount: isiData[index].diskon.toString(),
+              //             productName: isiData[index].nama_barang,
+              //           ),
+                      
+              //             );
+              //         });}else if (snapshot.hasError){
+              //           return Text("${snapshot.error}");
+              //         }
+              //         return const CircularProgressIndicator();
+              //       }),
+              // ),
               const SizedBox(
                 height: 16,
               )

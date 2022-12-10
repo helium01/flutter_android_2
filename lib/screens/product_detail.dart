@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/cart.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/screens/review_product.dart';
+import 'package:phileaflorist/screens/ship_to.dart';
+import 'package:phileaflorist/widgets/button_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../utils/all_lists.dart';
@@ -28,12 +32,21 @@ class ProductDetail extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    TextButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Home()
+                    ),
+                  );
+                    }, child:  Icon(
                       Icons.arrow_back_ios,
                       color: AppConstants.subTxtColor,
                       size: 18,
-                    ),
+                    ),),
+                    
                     SizedBox(
                       width: 21,
                     ),
@@ -192,6 +205,14 @@ class ProductDetail extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
+                    ButtonWidget(
+                          buttonText: "Tambah ke keranjang",
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Cart()));
+                          }),
                     const TextWidget(
                       txt: "Detail",
                       fontSize: 14,

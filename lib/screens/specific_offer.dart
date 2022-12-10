@@ -82,11 +82,11 @@ class SpecificOffer extends StatelessWidget {
                           imagePath:
                               _lists.bungaList[index].foto,
                           newPrice:
-                              _lists.bungaList[index].harga_akhir,
+                              _lists.bungaList[index].harga_akhir.toString(),
                           oldPrice:
-                              _lists.bungaList[index].harga,
+                              _lists.bungaList[index].harga.toString(),
                           discount:
-                              _lists.bungaList[index].diskon,
+                              _lists.bungaList[index].diskon.toString(),
                           productName:
                               _lists.bungaList[index].nama_barang,
                           addRating: true,

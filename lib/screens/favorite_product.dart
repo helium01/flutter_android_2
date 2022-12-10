@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/utils/app_constants.dart';
 
 import '../utils/all_lists.dart';
@@ -23,12 +24,23 @@ class FavoriteProduct extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children:  [
+                    TextButton(
+                      onPressed: (){
+                           Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Home()
+                    ),
+                  );
+                      }, 
+                    child: Icon(
                       Icons.arrow_back_ios,
                       color: AppConstants.subTxtColor,
                       size: 18,
-                    ),
+                    ),),
+                    
                     SizedBox(
                       width: 21,
                     ),
@@ -72,11 +84,11 @@ class FavoriteProduct extends StatelessWidget {
                           imagePath:
                               _lists.bungaList[index].foto,
                           newPrice:
-                              _lists.bungaList[index].harga_akhir,
+                              _lists.bungaList[index].harga_akhir.toString(),
                           oldPrice:
-                              _lists.bungaList[index].harga,
+                              _lists.bungaList[index].harga.toString(),
                           discount:
-                              _lists.bungaList[index].diskon,
+                              _lists.bungaList[index].diskon.toString(),
                           productName:
                               _lists.bungaList[index].nama_barang,
                           addRating: true,

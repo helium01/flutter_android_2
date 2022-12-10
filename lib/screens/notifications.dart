@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:phileaflorist/screens/activity_notifications.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/screens/offer_notifications.dart';
 import 'package:phileaflorist/widgets/all_notifications_list_tile.dart';
 
@@ -22,12 +23,20 @@ class Notifications extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    ElevatedButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Home()
+                    ),
+                  );
+                    }, child:  Icon(
                       Icons.arrow_back_ios,
                       color: AppConstants.subTxtColor,
                       size: 18,
-                    ),
+                    ),),
                     SizedBox(
                       width: 21,
                     ),
