@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/screens/write_review.dart';
 import 'package:phileaflorist/widgets/button_widget.dart';
 import 'package:phileaflorist/widgets/rating_container.dart';
@@ -26,12 +27,15 @@ class ReviewProduct extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children:  [
+                    TextButton(onPressed: (){
+                      Navigator.pop(context,
+                      MaterialPageRoute(builder: (context)=>Home()));
+                    }, child: Icon(
                       Icons.arrow_back_ios,
                       color: AppConstants.subTxtColor,
                       size: 18,
-                    ),
+                    ),),
                     SizedBox(
                       width: 21,
                     ),

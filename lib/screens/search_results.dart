@@ -145,6 +145,7 @@ class SearchResults extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: ProductDisplayContainer(
+                  id: _lists.bungaList[index].id,
                   imagePath: _lists.bungaList[index].foto,
                   newPrice: _lists.bungaList[index].harga_akhir.toString(),
                   oldPrice: _lists.bungaList[index].harga.toString(),

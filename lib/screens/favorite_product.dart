@@ -81,6 +81,7 @@ class FavoriteProduct extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: ProductDisplayContainer(
+                          id: _lists.bungaList[index].id,
                           imagePath:
                               _lists.bungaList[index].foto,
                           newPrice:

@@ -79,6 +79,7 @@ class SpecificOffer extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: ProductDisplayContainer(
+                          id: _lists.bungaList[index].id,
                           imagePath:
                               _lists.bungaList[index].foto,
                           newPrice:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/auth_screens/akun/profile/profile.dart';
 import 'package:phileaflorist/screens/auth_screens/signup.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,6 +55,10 @@ class _LoginState extends State<Login>{
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        TextButton(onPressed: (){
+                          Navigator.push(context, 
+                          MaterialPageRoute(builder: (context)=>Home()));
+                        }, child: Icon(Icons.home)),
                         Text(
                           "Login",
                           textAlign: TextAlign.center,
@@ -170,10 +175,10 @@ class _LoginState extends State<Login>{
       'email' : email,
       'password' : password
     };
-  // print("saya");
-    var res =  Network().authDataPost(data, '/login');
+  print(data);
+   var res = await Network().authDataPost(data, '/auth/login');
     var body = json.decode(res.body);
-    print(data);
+    print(body);
     print('saya');
     if(body['data'] != null){
       SharedPreferences localStorage = await SharedPreferences.getInstance();

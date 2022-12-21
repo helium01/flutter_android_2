@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/auth_screens/akun/profile/profile.dart';
+import 'package:phileaflorist/screens/home.dart';
 import 'login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -54,6 +55,10 @@ class _RegisterState extends State<Register>{
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        TextButton(onPressed: (){
+                          Navigator.push(context, 
+                          MaterialPageRoute(builder: (context)=>Home()));
+                        }, child: Icon(Icons.home)),
                         Text(
                           "Register",
                           textAlign: TextAlign.center,
@@ -187,7 +192,7 @@ class _RegisterState extends State<Register>{
       'password' : password
     };
 
-    var res = await Network().authDataPost(data, '/register');
+    var res = await Network().authDataPost(data, '/auth/register');
     var body = json.decode(res.body);
    
     if(body['data'] !=null){

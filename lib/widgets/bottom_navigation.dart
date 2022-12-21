@@ -45,9 +45,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     _lists.kategotiList=await repokategori.getDataKategori();
   }
   repoKeranjang repokeranjang =repoKeranjang();
-  getDataKe()async{
-    _lists.keranjangList=await repokeranjang.getDataKeranjang('/user');
-  }
+ 
   repoProfil repoprofil =repoProfil();
   getDataP()async{
     _lists.profilList=await repoprofil.getDataProfil();
@@ -58,7 +56,6 @@ void initState() {
   getDataB();
   getDataG();
   getDataK();
-  getDataKe();
   getDataP();
   super.initState();
   listBunga=repobunga.getDataBunga();

@@ -17,9 +17,9 @@ void initState(){
 
 void _getUserInfo()async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  var userJson = localStorage.getString('token');
+  var userJson = localStorage.getString('data');
   var user=json.decode(userJson.toString());
-  // print(userJson);
+  print(user);
   setState(() {
     userdata=user;
   });
@@ -61,13 +61,13 @@ void _getUserInfo()async{
             
             SizedBox(height: 10.0),
             Center(
-                child: Text("k",
+                child: Text("${userdata['name']}",
                     style: TextStyle(
                         fontSize: 18.0,
                         color: RecehanColors.red,
                         fontWeight: FontWeight.bold))),
             Center(
-                child: Text('kurnia.f.sella@gmail.com',
+                child: Text('${userdata['email']}',
                     style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.black.withOpacity(.2),
@@ -124,12 +124,13 @@ class ProfileViewAppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       leading: Container(
         padding: EdgeInsets.all(10.0),
-        child: ElevatedButton(
-          onPressed: () {
-            logout();
-          },
-          child: Icon(Icons.arrow_back_ios, color: RecehanColors.red),
-        ),
+        child: IconButton(
+            icon: Icon(Icons.power_settings_new),
+            onPressed: (){
+              logout();
+            },
+          ),
+          
       ),
       actions: <Widget>[
         Padding(
@@ -154,9 +155,9 @@ class ProfileViewAppBar extends StatelessWidget {
   void logout() async {
     var res = await Network().getData('/logout');
     var body = json.decode(res.body);
-    print(body);
+    // print(body);
     //  if(body['pesan'] !=null){
-      print('ok');
+      print('ok coba ya');
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');
       localStorage.remove('token');
@@ -166,7 +167,6 @@ class ProfileViewAppBar extends StatelessWidget {
     // }
     
   }
-  
   
 }
 

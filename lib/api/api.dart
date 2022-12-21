@@ -24,11 +24,41 @@ class Bunga{
   });
 
   factory Bunga.fromJson(Map<String,dynamic>json){
+    // print(json['nama_barang']);
     return Bunga(id: json['id'], id_kategori: json['id_kategori'], 
     nama_barang: json['nama_barang'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
     harga: json['harga'], harga_akhir: json['harga_akhir'], nama_kategori: json['nama_kategori'], stok: json['stok']);
   }
 }
+class Bunga2{
+  final int id;
+  final String id_kategori;
+  final String nama_barang;
+  final String foto;
+  final String deskripsi;
+  final String diskon;
+  final String harga;
+  final String stok;
+  final String harga_akhir;
+
+  const Bunga2({
+    
+    required this.id,
+    required this.id_kategori,
+    required this.nama_barang,
+    required this.deskripsi,
+    required this.diskon,
+    required this.foto,
+    required this.harga,
+    required this.harga_akhir,
+    required this.stok,
+  });
+
+  factory Bunga2.fromJson(Map<String,dynamic>json){
+    return Bunga2(id: json['id'], id_kategori: json['id_kategori'], 
+    nama_barang: json['nama_barang'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
+    harga: json['harga'], harga_akhir: json['harga_akhir'], stok: json['stok']);
+  }}
 // bunga populer
 class BungaPopuler{
   final String id;
@@ -112,12 +142,12 @@ class Kategori{
   }
 }
 class Keranjang{
-  final int id;
-  final int id_barang;
-  final int jumlah_keranjang;
+  final String id;
+  final String id_barang;
+  final String jumlah_keranjang;
   final String tgl_keranjang;
   final String status;
-  final int id_user;
+  final String id_user;
   final String foto;
   final String nama_barang;
 
@@ -132,7 +162,8 @@ class Keranjang{
     required this.tgl_keranjang,
   });
   factory Keranjang.fromJson(Map<String, dynamic>json){
-    return Keranjang(id: json['id'], id_barang: json['id_barang'], id_user: json['id_user'], jumlah_keranjang: json['jumlah_keranjang'], status: json['status'], tgl_keranjang: json['tgl_barang'], nama_barang: json['nama_barang'],foto: json['foto']);
+    // print(json);
+    return Keranjang(id: json['id'], id_barang: json['id_barang'], id_user: json['id_user'], jumlah_keranjang: json['jumlah_keranjang'], status: json['status'], tgl_keranjang: json['tgl_keranjang'], nama_barang: json['nama_barang'],foto: json['foto']);
   }
 }
 class Kontak{

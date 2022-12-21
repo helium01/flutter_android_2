@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/checkout/checkout.dart';
+import 'package:phileaflorist/screens/ship_to.dart';
+import 'package:phileaflorist/widgets/button_widget.dart';
 
 import '../utils/app_constants.dart';
 import 'Text_widget.dart';
@@ -159,8 +162,8 @@ class _CartContainerState extends State<CartContainer> {
                             color: AppConstants.subTxtColor,
                             size: 16,
                           ),
-                          height: 24,
-                          width: 32,
+                          height: 16,
+                          width: 26,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -171,14 +174,35 @@ class _CartContainerState extends State<CartContainer> {
                                   color: AppConstants.txtFieldColor)),
                         ),
                       ),
+                      
                     ],
                   ),
+                 
                 ],
-              )
+              ),
+                 
             ],
-          )
+          ),
+           Row(
+                    children: [
+                      ElevatedButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Checkout()
+                    ),
+                  );
+                    }, child:  Container(
+                      child: Text('checkout'),
+                    )
+                    ),
+                    ],
+                  )
         ],
+        
       ),
+      
     );
   }
 }

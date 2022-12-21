@@ -15,9 +15,11 @@ class ProductDisplayContainer extends StatelessWidget {
   final bool? addRating;
   final bool? addDeleteButton;
   final double margin;
+  final String id;
 
   const ProductDisplayContainer(
       {Key? key,
+      required this.id,
       required this.imagePath,
       required this.productName,
       required this.newPrice,
@@ -35,7 +37,7 @@ class ProductDisplayContainer extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductDetail()));
+                builder: (context) => ProductDetail(id: id,)));
       },
       child: Container(
         margin: EdgeInsets.only(right: margin),

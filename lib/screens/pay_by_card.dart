@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/keranjang/keranjang.dart';
 import 'package:phileaflorist/screens/success.dart';
 import 'package:phileaflorist/widgets/button_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -22,12 +23,15 @@ class PayByCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
               child: Row(
-                children: const [
-                  Icon(
+                children: [
+                  TextButton(onPressed: (){Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => keranjang()));}, child: Icon(
                     Icons.arrow_back_ios,
                     color: AppConstants.subTxtColor,
                     size: 18,
-                  ),
+                  ),),
                   SizedBox(
                     width: 21,
                   ),

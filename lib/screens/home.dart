@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:phileaflorist/api/api.dart';
 import 'package:phileaflorist/repository/repobunga.dart';
+import 'package:phileaflorist/screens/bunga/populer.dart';
+import 'package:phileaflorist/screens/bunga/rekomendasi.dart';
 import 'package:phileaflorist/screens/favorite_product.dart';
+import 'package:phileaflorist/screens/keranjang/keranjang.dart';
 import 'package:phileaflorist/screens/notifications.dart';
 import 'package:phileaflorist/screens/search.dart';
 import 'package:phileaflorist/utils/all_lists.dart';
@@ -18,10 +21,6 @@ class Home extends StatelessWidget {
   late Future<List<Bunga>> listBunga;
   repoGaleri repogaleri=repoGaleri();
   late Future<List<Galeri>> listGaleri;
- 
- 
-  
-
 
   Home({Key? key}) : super(key: key);
 
@@ -125,7 +124,7 @@ class Home extends StatelessWidget {
                 child:FutureBuilder<List<Galeri>>(
                   future: listGaleri,
                   builder: (context, snapshot) {
-                    print("apa");
+                    // print("apa");
                     if(snapshot.hasData){
                       List<Galeri> isidata=snapshot.data!;
                       return PageView.builder(
@@ -206,19 +205,26 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     TextWidget(
-                      txt: "Penjualan terbaik",
+                      txt: "bunga populer",
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       textColor: AppConstants.titleTextColor,
-                    ),
-                    TextWidget(
+                    ), 
+                    TextButton(onPressed: (){
+                       Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Populer()));
+                    }, child: TextWidget(
                       txt: "selanjutnya",
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       textColor: Color.fromARGB(255, 49, 201, 44),
-                    ),
+                    ),)
+                    
                   ],
                 ),
               ),
@@ -240,6 +246,7 @@ class Home extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
+                          id: isiData[index].id,
                           margin: 16,
                           imagePath: isiData[index].foto,
                           newPrice: isiData[index].harga_akhir.toString(),
@@ -259,19 +266,25 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     TextWidget(
-                      txt: "Bucket",
+                      txt: "rekomendasi",
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       textColor: AppConstants.titleTextColor,
                     ),
-                    TextWidget(
+                   TextButton(onPressed: (){
+                    Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Rekomendasi()));
+                    }, child: TextWidget(
                       txt: "selanjutnya",
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      textColor: AppConstants.primaryColor,
-                    ),
+                      textColor: Color.fromARGB(255, 49, 201, 44),
+                    ),)
                   ],
                 ),
               ),
@@ -293,6 +306,7 @@ class Home extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
+                          id: isiData[index].id,
                           margin: 16,
                           imagePath: isiData[index].foto,
                           newPrice: isiData[index].harga_akhir.toString(),
@@ -308,45 +322,45 @@ class Home extends StatelessWidget {
                     }),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Image.asset(
-                          "assets/images/coba1.png",
-                          height: 206,
-                          width: 343,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24, top: 48),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              TextWidget(
-                                txt: "Recomended\nProduct",
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                                textColor: AppConstants.whiteColor,
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              TextWidget(
-                                txt: "We recommend the best for you",
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                textColor: AppConstants.whiteColor,
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Column(
+              //     children: [
+              //       Stack(
+              //         children: [
+              //           Image.asset(
+              //             "assets/images/coba1.png",
+              //             height: 206,
+              //             width: 343,
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.only(left: 24, top: 48),
+              //             child: Column(
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               children: const [
+              //                 TextWidget(
+              //                   txt: "Recomended\nProduct",
+              //                   fontSize: 24,
+              //                   fontWeight: FontWeight.w700,
+              //                   textColor: AppConstants.whiteColor,
+              //                 ),
+              //                 SizedBox(
+              //                   height: 16,
+              //                 ),
+              //                 TextWidget(
+              //                   txt: "We recommend the best for you",
+              //                   fontSize: 12,
+              //                   fontWeight: FontWeight.w400,
+              //                   textColor: AppConstants.whiteColor,
+              //                 )
+              //               ],
+              //             ),
+              //           )
+              //         ],
+              //       )
+              //     ],
+              //   ),
+              // ),
               const SizedBox(
                 height: 16,
               ),

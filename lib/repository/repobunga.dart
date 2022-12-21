@@ -12,7 +12,7 @@ class repoBunga{
 
       if(response.statusCode==200){
         List bunga=json.decode(response.body)['data'];
-      //  print(bunga);
+       print(bunga);
         // // print(response);
         // Iterable it =jsonDecode(response.body);
         // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
@@ -42,16 +42,17 @@ class repoKategori{
   }
 }
 class repoKeranjang{
-  final baseUrl='http://fajar.patusaninc.com/api/v1/keranjang';
+  final baseUrl='http://fajar.patusaninc.com/api/v1/keranjang/';
+  
 
   Future<List<Keranjang>> getDataKeranjang(apiUrl)async{
     
+    // print(baseUrl+apiUrl);
       final response=await http.get(Uri.parse(baseUrl+apiUrl));
-
       if(response.statusCode==200){
         List keranjang=json.decode(response.body)['data'];
        
-        // // print(response);
+        // print(keranjang);
         // Iterable it =jsonDecode(response.body);
         // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
         return keranjang.map((data) => Keranjang.fromJson(data)).toList();
@@ -117,8 +118,92 @@ class repoGaleri{
       }
   }
 }
+class repoDetail{
+  final String id;
+  final baseUrl='http://fajar.patusaninc.com/api/v1/barang/';
+  repoDetail({
+    required this.id,
+  });
+  Future<Bunga> getDetailBunga()async{
+  // print(baseUrl+id);
+    final response=await http.get(Uri.parse(baseUrl+id));
+     if(response.statusCode==200){
+        var populer=json.decode(response.body)['data'];
+      //  print(populer);
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return Bunga.fromJson(jsonDecode(populer));
+      }else{
+        throw Exception('failed to load data');
+      }
+
+  }
+
+}
+class repoPopuler{
+  final baseUrl='http://fajar.patusaninc.com/api/v1/barang/populer/barang';
+
+  Future<List<BungaPopuler>> getDataBungaPopuler()async{
+    
+      final response=await http.get(Uri.parse(baseUrl));
+
+      if(response.statusCode==200){
+        List populer=json.decode(response.body)['data'];
+       
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return populer.map((data) => BungaPopuler.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+  }
+}
+
+class repoRekomendasi{
+  final baseUrl='http://fajar.patusaninc.com/api/v1/barang/populer/barang';
+
+  Future<List<BungaRekomendasi>> getDataBungaRekoemdasi()async{
+    
+      final response=await http.get(Uri.parse(baseUrl));
+
+      if(response.statusCode==200){
+        List rekomendasi=json.decode(response.body)['data'];
+       
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return rekomendasi.map((data) => BungaRekomendasi.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+  }
+}
+class repoTestimoni{
+  final baseUrl='http://fajar.patusaninc.com/api/v1/barang/populer/barang';
+
+  Future<List<Testimoni>> getDataTestimoni()async{
+    
+      final response=await http.get(Uri.parse(baseUrl));
+
+      if(response.statusCode==200){
+        List testimoni=json.decode(response.body)['data'];
+       
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return testimoni.map((data) => Testimoni.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+  }
+}
+
+
+
 class Network{
-  final String _url = 'http://fajar.patusaninc.com/api/v1/auth';
+  final String _url = 'http://fajar.patusaninc.com/api/v1';
   var token;
 
   _getToken() async {
@@ -130,7 +215,7 @@ class Network{
   }
 
   authDataPost(data, apiUrl) async {
-    // print("indonesia merdeka");
+    print("indonesia merdeka");
     var fullUrl = _url + apiUrl;
     print(fullUrl);
     return await http.post(
@@ -163,5 +248,5 @@ class Network{
     'Accept' : 'application/json',
     'Authorization' : 'Bearer $token'
   };
-
 }
+
