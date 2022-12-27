@@ -115,7 +115,7 @@ class _RegisterState extends State<Register>{
                             if(passwordValue!.isEmpty){
                               return 'Please enter your password';
                             }
-                            password = passwordValue!;
+                            password = passwordValue;
                             return null;
                           }
                         ),
