@@ -180,25 +180,25 @@ class repoRekomendasi{
       }
   }
 }
-class repoTestimoni{
-  final baseUrl='http://fajar.patusaninc.com/api/v1/barang/populer/barang';
+// class repoTestimoni{
+//   final baseUrl='http://fajar.patusaninc.com/api/v1/testimoni/';
 
-  Future<List<Testimoni>> getDataTestimoni()async{
+//   Future<List<Testimonii>> getDataTestimoni()async{
     
-      final response=await http.get(Uri.parse(baseUrl));
+//       final response=await http.get(Uri.parse(baseUrl));
 
-      if(response.statusCode==200){
-        List testimoni=json.decode(response.body)['data'];
+//       if(response.statusCode==200){
+//         List testimoni=json.decode(response.body)['data'];
        
-        // // print(response);
-        // Iterable it =jsonDecode(response.body);
-        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
-        return testimoni.map((data) => Testimoni.fromJson(data)).toList();
-      }else{
-        throw Exception('failed to load data');
-      }
-  }
-}
+//         // // print(response);
+//         // Iterable it =jsonDecode(response.body);
+//         // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+//         return testimoni.map((data) => Testimonii.fromJson(data)).toList();
+//       }else{
+//         throw Exception('failed to load data');
+//       }
+//   }
+// }
 
 
 

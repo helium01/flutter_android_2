@@ -15,7 +15,6 @@ class AllLists {
   List<Keranjang> keranjangList = [];
   List<Kontak> kontakList = [];
   List<Profil> profilList = [];
-  List<Testimoni> testimoniList = [];
 
   List<SelectSizesModel> sizesList = [
     SelectSizesModel(size: "6", isSelected: false),

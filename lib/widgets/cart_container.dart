@@ -7,12 +7,14 @@ import '../utils/app_constants.dart';
 import 'Text_widget.dart';
 
 class CartContainer extends StatefulWidget {
+  final String id;
   final String productName;
   final String productImagePath;
   final String price;
 
   CartContainer(
       {required this.productName,
+      required this.id,
       required this.productImagePath,
       required this.price});
 
@@ -36,8 +38,8 @@ class _CartContainerState extends State<CartContainer> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            widget.productImagePath,
+          Image.network(
+          "http://fajar.patusaninc.com/foto/"+widget.productImagePath,
             height: 72,
             width: 72,
           ),
@@ -190,7 +192,7 @@ class _CartContainerState extends State<CartContainer> {
                     context,
                     // DetailPage adalah halaman yang dituju 
                     MaterialPageRoute(
-                      builder: (context) => Checkout()
+                      builder: (context) => Checkout(id: widget.id,)
                     ),
                   );
                     }, child:  Container(

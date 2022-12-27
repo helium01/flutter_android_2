@@ -34,6 +34,7 @@ class Bunga2{
   final int id;
   final String id_kategori;
   final String nama_barang;
+  final String kode_barang;
   final String foto;
   final String deskripsi;
   final String diskon;
@@ -46,6 +47,7 @@ class Bunga2{
     required this.id,
     required this.id_kategori,
     required this.nama_barang,
+    required this.kode_barang,
     required this.deskripsi,
     required this.diskon,
     required this.foto,
@@ -55,13 +57,13 @@ class Bunga2{
   });
 
   factory Bunga2.fromJson(Map<String,dynamic>json){
-    return Bunga2(id: json['id'], id_kategori: json['id_kategori'], 
+    return Bunga2(id: json['id'], kode_barang: json['kode_barang'], id_kategori: json['id_kategori'], 
     nama_barang: json['nama_barang'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
     harga: json['harga'], harga_akhir: json['harga_akhir'], stok: json['stok']);
   }}
 // bunga populer
 class BungaPopuler{
-  final String id;
+  final int id;
   final String id_kategori;
   final String nama_barang;
   final String foto;
@@ -70,7 +72,6 @@ class BungaPopuler{
   final String harga;
   final String stok;
   final String harga_akhir;
-  final String nama_kategori;
 
   const BungaPopuler({
     required this.id,
@@ -81,20 +82,19 @@ class BungaPopuler{
     required this.foto,
     required this.harga,
     required this.harga_akhir,
-    required this.nama_kategori,
     required this.stok,
   });
 
   factory BungaPopuler.fromJson(Map<String,dynamic>json){
     return BungaPopuler(id: json['id'], id_kategori: json['id_kategori'], 
     nama_barang: json['nama_barang'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
-    harga: json['harga'], harga_akhir: json['harga_akhir'], nama_kategori: json['nama_kategori'], stok: json['stok']);
+    harga: json['harga'], harga_akhir: json['harga_akhir'], stok: json['stok']);
   }
 }
 
 // rekomendasi
 class BungaRekomendasi{
-  final String id;
+  final int id;
   final String id_kategori;
   final String nama_barang;
   final String foto;
@@ -103,7 +103,6 @@ class BungaRekomendasi{
   final String harga;
   final String stok;
   final String harga_akhir;
-  final String nama_kategori;
 
   const BungaRekomendasi({
     required this.id,
@@ -114,14 +113,13 @@ class BungaRekomendasi{
     required this.foto,
     required this.harga,
     required this.harga_akhir,
-    required this.nama_kategori,
     required this.stok,
   });
 
   factory BungaRekomendasi.fromJson(Map<String,dynamic>json){
     return BungaRekomendasi(id: json['id'], id_kategori: json['id_kategori'], 
     nama_barang: json['nama_barang'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
-    harga: json['harga'], harga_akhir: json['harga_akhir'], nama_kategori: json['nama_kategori'], stok: json['stok']);
+    harga: json['harga'], harga_akhir: json['harga_akhir'], stok: json['stok']);
   }
 }
 
@@ -149,6 +147,7 @@ class Keranjang{
   final String status;
   final String id_user;
   final String foto;
+  final String harga;
   final String nama_barang;
 
   const Keranjang({
@@ -159,11 +158,44 @@ class Keranjang{
     required this.status,
     required this.foto,
     required this.nama_barang,
+    required this.harga,
     required this.tgl_keranjang,
   });
   factory Keranjang.fromJson(Map<String, dynamic>json){
     // print(json);
-    return Keranjang(id: json['id'], id_barang: json['id_barang'], id_user: json['id_user'], jumlah_keranjang: json['jumlah_keranjang'], status: json['status'], tgl_keranjang: json['tgl_keranjang'], nama_barang: json['nama_barang'],foto: json['foto']);
+    return Keranjang(id: json['id'], harga: json['harga'],  id_barang: json['id_barang'], id_user: json['id_user'], jumlah_keranjang: json['jumlah_keranjang'], status: json['status'], tgl_keranjang: json['tgl_keranjang'], nama_barang: json['nama_barang'],foto: json['foto']);
+  }
+}
+
+class Checkoutt{
+  final String id;
+  final String id_barang;
+  final String kode_barang;
+  final String jumlah_keranjang;
+  final String tgl_keranjang;
+  final String status;
+  final String id_user;
+  final String foto;
+  final String harga;
+  final String harga_akhir;
+  final String nama_barang;
+
+  const Checkoutt({
+    required this.id,
+    required this.id_barang,
+    required this.kode_barang,
+    required this.id_user,
+    required this.jumlah_keranjang,
+    required this.status,
+    required this.foto,
+    required this.nama_barang,
+    required this.harga,
+    required this.harga_akhir,
+    required this.tgl_keranjang,
+  });
+  factory Checkoutt.fromJson(Map<String, dynamic>json){
+    print(json);
+    return Checkoutt(id: json['id'], kode_barang: json['kode_barang'], harga: json['harga'], harga_akhir: json['harga_akhir'],  id_barang: json['id_barang'], id_user: json['id_user'], jumlah_keranjang: json['jumlah_keranjang'], status: json['status'], tgl_keranjang: json['tgl_keranjang'], nama_barang: json['nama_barang'],foto: json['foto']);
   }
 }
 class Kontak{
@@ -212,27 +244,26 @@ class Profil{
       return Profil(moto:json['moto'],foto_1: json['foto_1'], foto_2: json['foto_2'], foto_3: json['foto_3'], id: json['id']);
     }
 }
-class Testimoni{
+class Testimonii{
   final String id;
   final String name;
     final String id_user;
     final String id_barang;
     final String bintang;
-    final String email_testimoni;
     final String pesan;
 
-    const Testimoni({
+    const Testimonii({
       required this.id_user,
       required this.id_barang,
       required this.bintang,
       required this.id,
       required this.pesan,
-      required this.email_testimoni,
       required this.name,
     });
 
-    factory Testimoni.fromJson(Map<String,dynamic>json){
-      return Testimoni(name:json['name'],email_testimoni: json['email_testimoni'], 
+    factory Testimonii.fromJson(Map<String,dynamic>json){
+      // print(json);
+      return Testimonii(name:json['name'],
       pesan: json['pesan'], bintang: json['bintang'], id: json['id'], id_barang: json['id_barang'], id_user: json['id_user']);
     }
 }

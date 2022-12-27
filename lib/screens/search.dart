@@ -50,10 +50,7 @@ class Search extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 28),
-                    Icon(
-                      Icons.mic_none,
-                      color: AppConstants.subTxtColor,
-                    ),
+                   
                   ],
                 ),
               ),

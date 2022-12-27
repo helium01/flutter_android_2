@@ -116,7 +116,7 @@ class AllScreens extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ReviewProduct()));
+                              builder: (context) => ReviewProduct(id: "",)));
                     }),
                 SizedBox(
                   height: 20,

@@ -32,6 +32,7 @@ class produk_detail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(id);
   final baseUrl='http://fajar.patusaninc.com/api/v1/barang/'+id;
   Future<Bunga2> getDetailBunga()async{
   // print(baseUrl+id);
@@ -270,7 +271,7 @@ class produk_detail extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => tambah_keranjang()));
+                                    builder: (context) => tambah_keranjang(id: snapshot.data!.id.toString(),)));
                           }),
                     const SizedBox(
                       height: 24,
@@ -334,7 +335,7 @@ class produk_detail extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ReviewProduct()));
+                                    builder: (context) => ReviewProduct(id: id,)));
                           },
                           child: TextWidget(
                             txt: "See More",

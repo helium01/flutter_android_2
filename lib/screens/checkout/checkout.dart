@@ -3,29 +3,44 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:phileaflorist/api/api.dart';
+import 'package:http/http.dart' as http;
 import 'package:phileaflorist/repository/repobunga.dart';
+import 'package:phileaflorist/screens/keranjang/keranjang.dart';
 import 'package:phileaflorist/screens/pay_by_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Checkout extends StatefulWidget{
+  final String id;
+  Checkout({
+    required this.id,
+  });
 
 @override
-  _Checkout createState() => _Checkout();
+  _Checkout createState() => _Checkout(id: id);
 }
 
 class _Checkout extends State<Checkout> {
   // const _Checkout({super.key});
+  final String id;
+  _Checkout({
+    required this.id,
+  });
   bool _isLoading = false;
-  late int id_user,id_barang,jumlah_barang,harga,kota;
- late String kode_barang,nama_barang,tanggal,kurir;
+  late int id_user,id_barang,jumlah_barang,harga;
+ late String kode_barang,nama_barang,tanggal,kurir,kota,kabupaten;
  bool _secureText = true;
   var userdata;
-
+@override
+void initState(){
+  _getUserInfo();
+  super.initState();
+}
 void _getUserInfo()async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   var userJson = localStorage.getString('data');
   var user=json.decode(userJson.toString());
-  print(user);
+  // print(user);
   setState(() {
     userdata=user;
   });
@@ -48,6 +63,24 @@ showHide(){
 
   @override
   Widget build(BuildContext context) {
+    final baseUrl='http://fajar.patusaninc.com/api/v1/order/'+id;
+  Future<List<Checkoutt>> getDetailBunga()async{
+  // print(baseUrl+id);
+    final response=await http.get(Uri.parse(baseUrl));
+     if(response.statusCode==200){
+         List kategori=json.decode(response.body)['data'];
+       
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return kategori.map((data) => Checkoutt.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+
+  }
+  late Future<List<Checkoutt>> coba;
+  coba=getDetailBunga();
      final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -60,19 +93,26 @@ showHide(){
         key: _formKey,
         child: Container(
           padding: EdgeInsets.all(20.0),
-          child: Column(
+          child: FutureBuilder<List<Checkoutt>>(
+                    future: coba,
+                    builder: (context, snapshot) {
+                      List<Checkoutt> isidata=snapshot.data!;
+                      // print("kok bisa ya");
+                      if (snapshot.hasData) {
+                        return Column(
             children: [
               // TextField(),
               TextFormField(
                 decoration: new InputDecoration(
-                  hintText: "contoh: fajar yuris",
+                  
+                  hintText: "contoh: 1",
                   labelText: "id user",
                   icon: Icon(Icons.people),
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
-                // readOnly: true,
-                initialValue: "",
+                readOnly: true,
+                initialValue: "${userdata['id']}",
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -81,8 +121,8 @@ showHide(){
                   return null;
                 },
               ),
-              SizedBox(height: 18),
-              TextFormField(
+              SizedBox(height: 18,),
+               TextFormField(
                 decoration: new InputDecoration(
                   hintText: "contoh: fajar yuris",
                   labelText: "id barang",
@@ -90,6 +130,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: isidata[0].id_barang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -107,6 +149,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: isidata[0].kode_barang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -124,6 +168,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: isidata[0].nama_barang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -136,24 +182,7 @@ showHide(){
               TextFormField(
                 decoration: new InputDecoration(
                   hintText: "contoh: fajar yuris",
-                  labelText: "tanggal",
-                  icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Nama tidak boleh kosong';
-                  }
-                  tanggal=value;
-                  return null;
-                },
-              ),
-              SizedBox(height: 18),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "contoh: fajar yuris",
-                  labelText: "kurir",
+                  labelText: "jenis pengiriman",
                   icon: Icon(Icons.people),
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
@@ -167,7 +196,7 @@ showHide(){
                   kurir=value;
                   return null;
                 },
-              ),
+              ),  
               SizedBox(height: 18),
               TextFormField(
                 decoration: new InputDecoration(
@@ -181,7 +210,62 @@ showHide(){
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
                   }
-                  kota=114;
+                  kota=value;
+                  return null;
+                },
+              ),
+              SizedBox(height: 18),
+              TextFormField(
+                decoration: new InputDecoration(
+                  hintText: "contoh: fajar yuris",
+                  labelText: "kabupaten",
+                  icon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0)),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  kabupaten=value;
+                  return null;
+                },
+              ),
+              SizedBox(height: 18),
+              TextFormField(
+                decoration: new InputDecoration(
+                  hintText: "contoh: fajar yuris",
+                  labelText: "total_harga",
+                  icon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0)),
+                ),
+                readOnly: true,
+                initialValue: isidata[0].harga_akhir,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  harga=int.parse(value);
+                  return null;
+                },
+              ),
+              SizedBox(height: 18),
+              TextFormField(
+                decoration: new InputDecoration(
+                  hintText: "contoh: fajar yuris",
+                  labelText: "tanggal",
+                  icon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0)),
+                ),
+                readOnly: true , 
+                 initialValue: DateTime.now().toString(),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  tanggal=value;
                   return null;
                 },
               ),
@@ -194,28 +278,13 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: isidata[0].jumlah_keranjang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
                   }
                   jumlah_barang=int.parse(value);
-                  return null;
-                },
-              ),
-              SizedBox(height: 18),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "contoh: fajar yuris",
-                  labelText: "harga",
-                  icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Nama tidak boleh kosong';
-                  }
-                  harga=int.parse(value);
                   return null;
                 },
               ),
@@ -227,12 +296,24 @@ showHide(){
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _kcheckout();
+                    _checkoutt();
                   }
                 },
               ),
             ],
-          ),
+          );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+
+                  // By default, show a loading spinner.
+                  return const CircularProgressIndicator();
+                },
+
+              ),
+          
+          
+          
         ),
       ),
           ],
@@ -243,7 +324,8 @@ showHide(){
       
     );
   }
-  void _kcheckout()async{
+  void _checkoutt()async{
+    // print("sampe sini");
     setState(() {
       _isLoading=true;
     });
@@ -259,12 +341,12 @@ showHide(){
       'tanggal' :tanggal,
       'jumlah_barang' :jumlah_barang
     };
-    print(data);
+    // print(data);
     var res = await Network().authDataPost(data, '/post/checkout');
     var body = json.decode(res.body);
    print(body);
     // if(body['data'] !=null){
- print(body);
+//  print(body);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

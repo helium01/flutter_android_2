@@ -32,6 +32,7 @@ class ProductDisplayContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(id);
     return GestureDetector(
       onTap: (){
         Navigator.push(
@@ -39,7 +40,8 @@ class ProductDisplayContainer extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => ProductDetail(id: id,)));
       },
-      child: Container(
+      child: SingleChildScrollView(
+        child:Container(
         margin: EdgeInsets.only(right: margin),
         decoration: BoxDecoration(
             border: Border.all(color: AppConstants.txtFieldColor),
@@ -49,7 +51,7 @@ class ProductDisplayContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network('http://fajar.basecampskripsi.xyz/foto/'+imagePath, height: 109, width: 118),
+              Image.network('http://fajar.patusaninc.com/foto/'+imagePath, height: 109, width: 118),
               const SizedBox(
                 height: 8,
               ),
@@ -90,6 +92,7 @@ class ProductDisplayContainer extends StatelessWidget {
           ),
         ),
       ),
+      )
     );
   }
 

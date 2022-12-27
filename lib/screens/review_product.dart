@@ -1,7 +1,11 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/api/api.dart';
 import 'package:phileaflorist/screens/home.dart';
 import 'package:phileaflorist/screens/write_review.dart';
+import 'package:http/http.dart' as http;
 import 'package:phileaflorist/widgets/button_widget.dart';
 import 'package:phileaflorist/widgets/rating_container.dart';
 
@@ -10,19 +14,59 @@ import '../utils/app_constants.dart';
 import '../widgets/Text_widget.dart';
 import '../widgets/single_review.dart';
 
-class ReviewProduct extends StatelessWidget {
-  final _lists = AllLists();
 
-  ReviewProduct({Key? key}) : super(key: key);
+class ReviewProduct extends StatefulWidget{
+  final String id;
+  ReviewProduct({
+    required this.id,
+  });
+  @override
+  _ReviewProduct createState()=>_ReviewProduct(id: id);
+}
+
+class _ReviewProduct extends State<ReviewProduct> {
+  final _lists = AllLists();
+  final String id;
+   var iconSize;
+  _ReviewProduct({
+    required this.id,
+  });
+
 
   @override
   Widget build(BuildContext context) {
+    iconSize = 20;
+    final baseUrl='http://fajar.patusaninc.com/api/v1/testimoni/'+id;
+  Future<List<Testimonii>> getDetailBunga()async{
+  // print(baseUrl+id);
+    final response=await http.get(Uri.parse(baseUrl));
+     if(response.statusCode==200){
+         List kategori=json.decode(response.body)['data'];
+       
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return kategori.map((data) => Testimonii.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+
+  }
+  late Future<List<Testimonii>> coba;
+  coba=getDetailBunga();
     return Scaffold(
       backgroundColor: AppConstants.whiteColor,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
+          child: FutureBuilder<List<Testimonii>>(
+                    future: coba,
+                    builder: (context, snapshot) {
+                      // print("kok bisa ya");
+                      print(snapshot.hasData);
+                      if (snapshot.hasData) {
+                      List<Testimonii> isiData =snapshot.data!;
+                        return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
@@ -40,7 +84,7 @@ class ReviewProduct extends StatelessWidget {
                       width: 21,
                     ),
                     TextWidget(
-                      txt: "5 Review",
+                      txt: " ${isiData.length} Review",
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       textColor: AppConstants.titleTextColor,
@@ -59,177 +103,103 @@ class ReviewProduct extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: SizedBox(
-                  height: 50,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppConstants.primaryColor.withOpacity(0.3),
-                        ),
-                        child: const Center(
-                          child: TextWidget(
-                            txt: "All Review",
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            textColor: AppConstants.primaryColor,
-                          ),
-                        ),
-                      ),
-                      const SingleRatingContainer(rating: "1"),
-                      const SingleRatingContainer(rating: "2"),
-                      const SingleRatingContainer(rating: "3"),
-                      const SingleRatingContainer(rating: "4"),
-                      const SingleRatingContainer(rating: "5"),
-                    ],
-                  ),
-                ),
-              ),
+              
               const SizedBox(
                 height: 24,
               ),
+
+              SizedBox(
+                height: 1000,
+                child:FutureBuilder <List<Testimonii>>(
+                  future: coba,
+                  builder: (context, snapshot) {
+                    print(isiData.length);
+                    if(snapshot.hasData){
+                      List<Testimonii> isidata = snapshot.data!;
+                      return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: isidata.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Stack(
+                          children: [
+                    Column(
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                              radius: 25, backgroundImage: AssetImage("assets/images/logoblue.png")),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextWidget(
+                                txt: "${isiData[index].name}",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                textColor: AppConstants.titleTextColor,
+                              ),
+                              
+                            ],
+                          )
+                        ],
+                      ),
+                      
+                      const SizedBox(height: 15,),
+                      
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      TextWidget(
+                        txt: "${isiData[index].pesan}",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        textColor: AppConstants.subTxtColor,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                  ],
+                        )
+                      );
+                    });
+                    }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                  },)
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
+                child: 
+                
+                
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SingleReview(
-                        profileImagePath: "assets/images/coba1.png",
-                        name: "James Lawson",
-                        isFullRating: false,
-                        review:
-                            "keren."),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SizedBox(
-                      height: 72,
-                      child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _lists.productImagesList.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child:
-                                  Image.asset(_lists.productImagesList[index]),
-                            );
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const TextWidget(
-                      txt: "December 10, 2016",
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      textColor: AppConstants.subTxtColor,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const SingleReview(
-                        profileImagePath: "assets/images/userimage2.png",
-                        name: "Laura Octavian",
-                        isFullRating: false,
-                        review:
-                            "This is really amazing product, i like the design of product, I hope can buy it again!"),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const TextWidget(
-                      txt: "December 10, 2016",
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      textColor: AppConstants.subTxtColor,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const SingleReview(
-                        profileImagePath: "assets/images/userimage3.png",
-                        name: "Jhonson Bridge",
-                        isFullRating: true,
-                        review:
-                            "air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the sneakers up a little bit"),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const TextWidget(
-                      txt: "December 10, 2016",
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      textColor: AppConstants.subTxtColor,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const SingleReview(
-                        profileImagePath: "assets/images/userimage4.png",
-                        name: "Griffin Rod",
-                        isFullRating: true,
-                        review:
-                            "air max are always very comfortable fit, clean and just perfect in every way. just the box was too small  "),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SizedBox(
-                      height: 72,
-                      child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _lists.productImagesList.length - 1,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child:
-                                  Image.asset(_lists.productImagesList[index]),
-                            );
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const TextWidget(
-                      txt: "December 10, 2016",
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      textColor: AppConstants.subTxtColor,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ButtonWidget(
-                        buttonText: "Write Review",
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => WriteReview()));
-                        }),
-                    const SizedBox(
-                      height: 37,
-                    ),
-                  ],
+                  
                 ),
               ),
             ],
-          ),
+          );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }else{
+                    return Text("data kosong");
+                  }
+
+                  // By default, show a loading spinner.
+                  return const CircularProgressIndicator();
+                },
+
+              ),
         ),
       ),
     );
   }
+
 }

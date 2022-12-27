@@ -21,11 +21,17 @@ class Home extends StatelessWidget {
   late Future<List<Bunga>> listBunga;
   repoGaleri repogaleri=repoGaleri();
   late Future<List<Galeri>> listGaleri;
+  repoPopuler repopopuler =repoPopuler();
+  late Future<List<BungaPopuler>> listPopuler;
+  repoRekomendasi reporekomendasi =repoRekomendasi();
+  late Future<List<BungaRekomendasi>> listRekomendasi;
 
   Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    listRekomendasi=reporekomendasi.getDataBungaRekoemdasi();
+    listPopuler=repopopuler.getDataBungaPopuler();
      listBunga=repobunga.getDataBunga();
      listGaleri=repogaleri.getDataGaleri();
     return Scaffold(
@@ -235,18 +241,18 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: SizedBox(
                   height: 244,
-                  child: FutureBuilder<List<Bunga>>(
-                    future: listBunga,
+                  child: FutureBuilder<List<BungaPopuler>>(
+                    future: listPopuler,
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
-                        List<Bunga> isiData =snapshot.data!;
+                        List<BungaPopuler> isiData =snapshot.data!;
                         return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: isiData.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
-                          id: isiData[index].id,
+                          id: isiData[index].id.toString(),
                           margin: 16,
                           imagePath: isiData[index].foto,
                           newPrice: isiData[index].harga_akhir.toString(),
@@ -295,18 +301,18 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16, bottom: 9),
                 child: SizedBox(
                   height: 244,
-                  child: FutureBuilder<List<Bunga>>(
-                    future: listBunga,
+                  child: FutureBuilder<List<BungaRekomendasi>>(
+                    future: listRekomendasi,
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
-                        List<Bunga> isiData =snapshot.data!;
+                        List<BungaRekomendasi> isiData =snapshot.data!;
                         return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: isiData.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return ProductDisplayContainer(
-                          id: isiData[index].id,
+                          id: isiData[index].id.toString(),
                           margin: 16,
                           imagePath: isiData[index].foto,
                           newPrice: isiData[index].harga_akhir.toString(),
@@ -322,83 +328,55 @@ class Home extends StatelessWidget {
                     }),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Column(
-              //     children: [
-              //       Stack(
-              //         children: [
-              //           Image.asset(
-              //             "assets/images/coba1.png",
-              //             height: 206,
-              //             width: 343,
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.only(left: 24, top: 48),
-              //             child: Column(
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: const [
-              //                 TextWidget(
-              //                   txt: "Recomended\nProduct",
-              //                   fontSize: 24,
-              //                   fontWeight: FontWeight.w700,
-              //                   textColor: AppConstants.whiteColor,
-              //                 ),
-              //                 SizedBox(
-              //                   height: 16,
-              //                 ),
-              //                 TextWidget(
-              //                   txt: "We recommend the best for you",
-              //                   fontSize: 12,
-              //                   fontWeight: FontWeight.w400,
-              //                   textColor: AppConstants.whiteColor,
-              //                 )
-              //               ],
-              //             ),
-              //           )
-              //         ],
-              //       )
-              //     ],
-              //   ),
-              // ),
-              const SizedBox(
-                height: 16,
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 16),
-              //   child: FutureBuilder<List<Bunga>>(
-              //       future: listBunga,
-              //       builder: (context, snapshot) {
-              //         if(snapshot.hasData){
-              //           List<Bunga> isiData =snapshot.data!;
-              //           return ListView.builder(
-              //         physics: const BouncingScrollPhysics(),
-              //         itemCount: isiData.length,
-              //         scrollDirection: Axis.horizontal,
-              //         itemBuilder: (context, index) {
-              //           return Padding(
-              //             padding: const EdgeInsets.only(left: 10),
-              //             child: ProductDisplayContainer(
-              //             margin: 16,
-              //             imagePath: isiData[index].foto,
-              //             newPrice: isiData[index].harga_akhir.toString(),
-              //             oldPrice: isiData[index].harga.toString(),
-              //             discount: isiData[index].diskon.toString(),
-              //             productName: isiData[index].nama_barang,
-              //           ),
-                      
-              //             );
-              //         });}else if (snapshot.hasError){
-              //           return Text("${snapshot.error}");
-              //         }
-              //         return const CircularProgressIndicator();
-              //       }),
-              // ),
-              const SizedBox(
-                height: 16,
+               TextWidget(
+                      txt: "produk",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      textColor: AppConstants.titleTextColor,
+                    ),
+              SingleChildScrollView(
+                child:Container(
+                
+                child: FutureBuilder<List<Bunga>>(
+                    future: listBunga,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        List<Bunga> isiData =snapshot.data!;
+                        return GridView.builder(
+                          
+                          shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300-4,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20),
+            itemCount: isiData.length,
+            itemBuilder: (BuildContext ctx, index) {
+              return ProductDisplayContainer(
+                
+                          id: isiData[index].id.toString(),
+                          margin: 16,
+                          imagePath: isiData[index].foto,
+                          newPrice: isiData[index].harga_akhir.toString(),
+                          oldPrice: isiData[index].harga.toString(),
+                          discount:  isiData[index].diskon.toString(),
+                          productName: isiData[index].nama_barang,
+                        );
+            });
+                      }else if (snapshot.hasError){
+                        return Text("error pak"+"${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+                
+                
+                
+              )
               )
             ],
+            
           ),
+          
         ),
       ),
     );

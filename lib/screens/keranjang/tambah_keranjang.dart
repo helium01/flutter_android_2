@@ -3,12 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
+import 'package:phileaflorist/api/api.dart';
 import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/keranjang/keranjang.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class tambah_keranjang extends StatefulWidget{
-  _tambah_keranjang createState() => _tambah_keranjang();
+  final String id;
+  tambah_keranjang({
+    required this.id,
+  });
+  _tambah_keranjang createState() => _tambah_keranjang(id: id);
 }
 
 class _tambah_keranjang extends State<tambah_keranjang> {
@@ -18,6 +24,10 @@ class _tambah_keranjang extends State<tambah_keranjang> {
  late String kode_barang,nama_barang,tanggal;
   bool _secureText = true;
   var userdata;
+  final String id;
+  _tambah_keranjang({
+    required this.id,
+  });
 @override
 void initState(){
   _getUserInfo();
@@ -47,6 +57,24 @@ showHide(){
   }
   @override
   Widget build(BuildContext context) {
+    final baseUrl='http://fajar.patusaninc.com/api/v1/barang/'+id;
+  Future<Bunga2> getDetailBunga()async{
+  // print(baseUrl+id);
+    final response=await http.get(Uri.parse(baseUrl));
+     if(response.statusCode==200){
+        var populer=json.decode(response.body)['data'];
+      //  print(populer);
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return Bunga2.fromJson(jsonDecode(response.body)['data']);
+      }else{
+        throw Exception('failed to load data');
+      }
+
+  }
+  late Future<Bunga2> coba;
+  coba=getDetailBunga();
      final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +84,13 @@ showHide(){
         key: _formKey,
         child: Container(
           padding: EdgeInsets.all(20.0),
-          child: Column(
+          child: FutureBuilder<Bunga2>(
+                    future: coba,
+                    builder: (context, snapshot) {
+                      // print("kok bisa ya");
+                      // print(snapshot.hasData);
+                      if (snapshot.hasData) {
+                        return Column(
             children: [
               // TextField(),
               TextFormField(
@@ -87,6 +121,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: snapshot.data!.id.toString(),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -104,6 +140,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: snapshot.data!.kode_barang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -121,6 +159,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true,
+                initialValue: snapshot.data!.nama_barang,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -138,6 +178,8 @@ showHide(){
                   border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
+                readOnly: true , 
+                 initialValue: DateTime.now().toString(),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Nama tidak boleh kosong';
@@ -176,7 +218,19 @@ showHide(){
                 },
               ),
             ],
-          ),
+          );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+
+                  // By default, show a loading spinner.
+                  return const CircularProgressIndicator();
+                },
+
+              ),
+          
+          
+          
         ),
       ),
     );

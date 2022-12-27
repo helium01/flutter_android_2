@@ -91,132 +91,163 @@ repoKeranjang repokeranjang = repoKeranjang();
                 SizedBox(
                   height: 16,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: 
-                  Column(
-                    children: [
-                      CartContainer(
-                          productName: "bunga salib ",
-                          productImagePath: "assets/bunga/bunga1.jpeg",
-                          price: "Rp. 500.000"),
-                           SizedBox(height: 16),
-                   
-                      SizedBox(
-                        height: 16,
-                      ),
-                      CartContainer(
-                          productName: "bunga papan",
-                          productImagePath: "assets/images/coba1.png",
-                          price: "Rp. 300.000"),
-                             SizedBox(
-                        height: 32,
-                      ),
-                      
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.5, vertical: 16),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border:
-                                Border.all(color: AppConstants.txtFieldColor)),
-                        child: Column(
+                SizedBox(
+                height: 190,
+                child:FutureBuilder <List<Keranjang>>(
+                  future: listKeranjang,
+                  builder: (context, snapshot) {
+                    // print("apa");
+                    if(snapshot.hasData){
+                      List<Keranjang> isidata = snapshot.data!;
+                      return PageView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: isidata.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Stack(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextWidget(
-                                  txt: "Items (2)",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.subTxtColor,
-                                ),
-                                TextWidget(
-                                  txt: "Rp. 800.000",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.titleTextColor,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextWidget(
-                                  txt: "kupon",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.subTxtColor,
-                                ),
-                                TextWidget(
-                                  txt: "0",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.titleTextColor,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextWidget(
-                                  txt: "ongkos kirim",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.subTxtColor,
-                                ),
-                                TextWidget(
-                                  txt: "0",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  textColor: AppConstants.titleTextColor,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            DottedLine(
-                              dashColor: AppConstants.txtFieldColor,
-                              dashLength: 5,
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextWidget(
-                                  txt: "Total harga",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  textColor: AppConstants.titleTextColor,
-                                ),
-                                TextWidget(
-                                  txt: "Rp. 800.000",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  textColor: AppConstants.primaryColor,
-                                ),
-                              ],
-                            ),
+                            CartContainer(
+                              id: isidata[index].id,
+                          productName: "${isidata[index].nama_barang}",
+                          productImagePath: "${isidata[index].foto}",
+                          price: "Rp. ${isidata[index].harga}"),
                           ],
                         ),
-                      ),
+                      );
+                    });
+                    }else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                  },)
+              ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                //   child: 
+                //   Column(
+                //     children: [
+                //       CartContainer(
+                //           productName: "bunga salib ",
+                //           productImagePath: "assets/bunga/bunga1.jpeg",
+                //           price: "Rp. 500.000"),
+                //            SizedBox(height: 16),
+                   
+                //       SizedBox(
+                //         height: 16,
+                //       ),
+                //       CartContainer(
+                //           productName: "bunga papan",
+                //           productImagePath: "assets/images/coba1.png",
+                //           price: "Rp. 300.000"),
+                //              SizedBox(
+                //         height: 32,
+                //       ),
+                      
+                //       SizedBox(
+                //         height: 16,
+                //       ),
+                //       Container(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: 16.5, vertical: 16),
+                //         decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(5),
+                //             border:
+                //                 Border.all(color: AppConstants.txtFieldColor)),
+                //         child: Column(
+                //           children: [
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 TextWidget(
+                //                   txt: "Items (2)",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.subTxtColor,
+                //                 ),
+                //                 TextWidget(
+                //                   txt: "Rp. 800.000",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.titleTextColor,
+                //                 ),
+                //               ],
+                //             ),
+                //             SizedBox(
+                //               height: 12,
+                //             ),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 TextWidget(
+                //                   txt: "kupon",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.subTxtColor,
+                //                 ),
+                //                 TextWidget(
+                //                   txt: "0",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.titleTextColor,
+                //                 ),
+                //               ],
+                //             ),
+                //             SizedBox(
+                //               height: 12,
+                //             ),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 TextWidget(
+                //                   txt: "ongkos kirim",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.subTxtColor,
+                //                 ),
+                //                 TextWidget(
+                //                   txt: "0",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   textColor: AppConstants.titleTextColor,
+                //                 ),
+                //               ],
+                //             ),
+                //             SizedBox(
+                //               height: 12,
+                //             ),
+                //             DottedLine(
+                //               dashColor: AppConstants.txtFieldColor,
+                //               dashLength: 5,
+                //             ),
+                //             SizedBox(
+                //               height: 12,
+                //             ),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 TextWidget(
+                //                   txt: "Total harga",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w700,
+                //                   textColor: AppConstants.titleTextColor,
+                //                 ),
+                //                 TextWidget(
+                //                   txt: "Rp. 800.000",
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w700,
+                //                   textColor: AppConstants.primaryColor,
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ),
                      
-                      SizedBox(height: 16),
-                    ],
-                  ),
-                )
+                //       SizedBox(height: 16),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),
