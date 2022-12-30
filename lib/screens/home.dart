@@ -14,6 +14,7 @@ import 'package:phileaflorist/widgets/Text_widget.dart';
 import 'package:phileaflorist/widgets/offer_banner_widget.dart';
 import 'package:phileaflorist/widgets/product_display_container_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class Home extends StatelessWidget {
   final _bannerController = PageController();
@@ -83,34 +84,7 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 19),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FavoriteProduct()));
-                      },
-                      child: const Icon(
-                        Icons.favorite_border,
-                        color: AppConstants.subTxtColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 22.8,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Notifications()));
-                      },
-                      child: const Icon(
-                        Icons.notifications_none_outlined,
-                        color: AppConstants.subTxtColor,
-                      ),
-                    )
+                   
                   ],
                 ),
               ),

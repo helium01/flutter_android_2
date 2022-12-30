@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/screens/home.dart';
 
 import '../utils/app_constants.dart';
 import '../widgets/Text_widget.dart';
@@ -49,7 +50,7 @@ class Success extends StatelessWidget {
               height: 8,
             ),
             const TextWidget(
-              txt: "thank you for shopping using lafyuu",
+              txt: "TERIMAKASIH TELAH BELANJA DI PHILEA FLORIST BALI",
               fontSize: 12,
               fontWeight: FontWeight.w400,
               textColor: AppConstants.subTxtColor,
@@ -58,8 +59,14 @@ class Success extends StatelessWidget {
               height: 16,
             ),
             ButtonWidget(
-              buttonText: "Back To Order",
-              onPressed: () {},
+              buttonText: "kembali belanja",
+              onPressed: () {
+                 Navigator.push(
+                    context,
+                    // DetailPage adalah halaman yang dituju 
+                    MaterialPageRoute(
+                      builder: (context) => Home(),));
+              },
             )
           ],
         ),

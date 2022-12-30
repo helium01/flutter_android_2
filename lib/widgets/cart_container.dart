@@ -62,126 +62,96 @@ class _CartContainerState extends State<CartContainer> {
                       textColor: AppConstants.titleTextColor,
                     ),
                   ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
-                          },
-                          child: isFavorite
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: AppConstants.lightRedColor,
-                                  size: 24,
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  color: AppConstants.subTxtColor,
-                                  size: 24,
-                                )),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Icon(
-                        Icons.delete_outline,
-                        color: AppConstants.subTxtColor,
-                        size: 24,
-                      ),
-                    ],
-                  ),
-
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextWidget(
-                    txt: widget.price,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    textColor: AppConstants.primaryColor,
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        splashColor:
-                            AppConstants.txtFieldColor.withOpacity(0.5),
-                        onTap: () {
-                          if (quantity > 0) {
-                            setState(() {
-                              quantity = quantity - 1;
-                            });
-                          } else {
-                            null;
-                          }
-                        },
-                        child: Container(
-                          child: Icon(
-                            Icons.remove,
-                            color: AppConstants.subTxtColor,
-                            size: 16,
-                          ),
-                          height: 24,
-                          width: 32,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5),
-                              ),
-                              border: Border.all(
-                                  color: AppConstants.txtFieldColor)),
-                        ),
-                      ),
-                      Container(
-                        child: TextWidget(
-                          txt: "$quantity",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          textColor: AppConstants.subTxtColor,
-                        ),
-                        height: 24,
-                        width: 32,
-                        alignment: Alignment.center,
-                        decoration:
-                            BoxDecoration(color: AppConstants.txtFieldColor
-                                //border: Border.all(color: Color(0xffEBF0FF))
-                                ),
-                      ),
-                      InkWell(
-                        splashColor:
-                            AppConstants.txtFieldColor.withOpacity(0.5),
-                        onTap: () {
-                          setState(() {
-                            quantity = quantity + 1;
-                          });
-                        },
-                        child: Container(
-                          child: Icon(
-                            Icons.add,
-                            color: AppConstants.subTxtColor,
-                            size: 16,
-                          ),
-                          height: 16,
-                          width: 26,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                bottomRight: Radius.circular(5),
-                              ),
-                              border: Border.all(
-                                  color: AppConstants.txtFieldColor)),
-                        ),
-                      ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     TextWidget(
+              //       txt: widget.price,
+              //       fontSize: 12,
+              //       fontWeight: FontWeight.w700,
+              //       textColor: AppConstants.primaryColor,
+              //     ),
+              //     Row(
+              //       children: [
+              //         InkWell(
+              //           splashColor:
+              //               AppConstants.txtFieldColor.withOpacity(0.5),
+              //           onTap: () {
+              //             if (quantity > 0) {
+              //               setState(() {
+              //                 quantity = quantity - 1;
+              //               });
+              //             } else {
+              //               null;
+              //             }
+              //           },
+              //           child: Container(
+              //             child: Icon(
+              //               Icons.remove,
+              //               color: AppConstants.subTxtColor,
+              //               size: 16,
+              //             ),
+              //             height: 24,
+              //             width: 32,
+              //             alignment: Alignment.center,
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.only(
+              //                   topLeft: Radius.circular(5),
+              //                   bottomLeft: Radius.circular(5),
+              //                 ),
+              //                 border: Border.all(
+              //                     color: AppConstants.txtFieldColor)),
+              //           ),
+              //         ),
+              //         Container(
+              //           child: TextWidget(
+              //             txt: "$quantity",
+              //             fontSize: 12,
+              //             fontWeight: FontWeight.w400,
+              //             textColor: AppConstants.subTxtColor,
+              //           ),
+              //           height: 24,
+              //           width: 32,
+              //           alignment: Alignment.center,
+              //           decoration:
+              //               BoxDecoration(color: AppConstants.txtFieldColor
+              //                   //border: Border.all(color: Color(0xffEBF0FF))
+              //                   ),
+              //         ),
+              //         InkWell(
+              //           splashColor:
+              //               AppConstants.txtFieldColor.withOpacity(0.5),
+              //           onTap: () {
+              //             setState(() {
+              //               quantity = quantity + 1;
+              //             });
+              //           },
+              //           child: Container(
+              //             child: Icon(
+              //               Icons.add,
+              //               color: AppConstants.subTxtColor,
+              //               size: 16,
+              //             ),
+              //             height: 16,
+              //             width: 26,
+              //             alignment: Alignment.center,
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.only(
+              //                   topRight: Radius.circular(5),
+              //                   bottomRight: Radius.circular(5),
+              //                 ),
+              //                 border: Border.all(
+              //                     color: AppConstants.txtFieldColor)),
+              //           ),
+              //         ),
                       
-                    ],
-                  ),
+              //       ],
+              //     ),
                  
-                ],
-              ),
+              //   ],
+              // ),
                  
             ],
           ),

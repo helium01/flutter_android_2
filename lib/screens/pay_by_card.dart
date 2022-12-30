@@ -65,7 +65,7 @@ class PayByCard extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 196,
-                  child: PageView.builder(
+                  child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       controller: _cardController,
                       itemCount: 5,
@@ -108,7 +108,7 @@ class PayByCard extends StatelessWidget {
                                 ),
                                 FittedBox(
                                   child: TextWidget(
-                                    txt: "6326    9124    8124    9875",
+                                    txt: "6404    0102    8471    532",
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
                                     textColor: AppConstants.whiteColor,
@@ -137,6 +137,24 @@ class PayByCard extends StatelessWidget {
                                         ),
                                         TextWidget(
                                           txt: "yuvita prinanda",
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          textColor: AppConstants.whiteColor,
+                                        ),
+                                         SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextWidget(
+                                          txt: "bank",
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          textColor: AppConstants.whiteColor,
+                                        ),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        TextWidget(
+                                          txt: "BRI",
                                           fontSize: 10,
                                           fontWeight: FontWeight.w700,
                                           textColor: AppConstants.whiteColor,
@@ -200,7 +218,7 @@ class PayByCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ButtonWidget(
-                      buttonText: "Pay Rp. 800.6000",
+                      buttonText: "bayar saran melakukan COD",
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Success()));

@@ -22,6 +22,25 @@ class repoBunga{
       }
   }
 }
+class repoCheckout{
+  final baseUrl='http://fajar.patusaninc.com/api/v1/cekorder/';
+
+  Future<List<Checkoutya>> getDataCheckout(id)async{
+    
+      final response=await http.get(Uri.parse(baseUrl+id));
+    print(response.statusCode);
+      if(response.statusCode==200){
+        List bunga=json.decode(response.body)['data'];
+       print(bunga);
+        // // print(response);
+        // Iterable it =jsonDecode(response.body);
+        // List<Bunga> bunga=it.map((e)=>Bunga.fromJson(e)).toList();
+        return bunga.map((data) => Checkoutya.fromJson(data)).toList();
+      }else{
+        throw Exception('failed to load data');
+      }
+  }
+}
 class repoKategori{
   final baseUrl='http://fajar.patusaninc.com/api/v1/kategori';
 

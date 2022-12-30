@@ -30,6 +30,50 @@ class Bunga{
     harga: json['harga'], harga_akhir: json['harga_akhir'], nama_kategori: json['nama_kategori'], stok: json['stok']);
   }
 }
+
+class Data{
+  final int data;
+  const Data({
+    required this.data,
+  });
+  factory Data.fromJson(Map<String,dynamic>json){
+    // print(json['nama_barang']);
+    return Data(data: json['data']);
+  }
+}
+
+class Checkoutya{
+  final String nama_barang;
+  final String jumlah_barang;
+  final String total_harga;
+  final String foto;
+  final String deskripsi;
+  final String diskon;
+  final String harga;
+  final String stok;
+  final String harga_akhir;
+  final String status;
+
+  const Checkoutya({
+    required this.nama_barang,
+    required this.jumlah_barang,
+    required this.total_harga,
+    required this.deskripsi,
+    required this.diskon,
+    required this.foto,
+    required this.harga,
+    required this.harga_akhir,
+    required this.status,
+    required this.stok,
+  });
+
+  factory Checkoutya.fromJson(Map<String,dynamic>json){
+    // print(json['nama_barang']);
+    return Checkoutya(status: json['status'],nama_barang: json['nama_barang'], jumlah_barang: json['jumlah_barang'], 
+    total_harga: json['total_harga'], deskripsi: json['deskripsi'], diskon: json['diskon'], foto: json['foto'], 
+    harga: json['harga'], harga_akhir: json['harga_akhir'], stok: json['stok']);
+  }
+}
 class Bunga2{
   final int id;
   final String id_kategori;

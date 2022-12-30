@@ -29,6 +29,9 @@ void _getUserInfo()async{
 
   @override
   Widget build(BuildContext context) {
+    if(userdata == null){
+      return const CircularProgressIndicator();
+    }
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -49,10 +52,10 @@ void _getUserInfo()async{
                     gradient: LinearGradient(
                         colors: [RecehanColors.red, RecehanColors.redWarm])),
                 child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Text('P',
+                  backgroundColor: Color.fromARGB(99, 228, 124, 55),
+                  child: Text('${userdata['name']}',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 240, 151, 151),
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold)),
                 ),
@@ -67,50 +70,15 @@ void _getUserInfo()async{
                         color: RecehanColors.red,
                         fontWeight: FontWeight.bold))),
             Center(
-                child: Text('${userdata['email']}',
+                child: Text('${userdata['email']??""}',
                     style: TextStyle(
                         fontSize: 18.0,
-                        color: Colors.black.withOpacity(.2),
+                        color: Color.fromARGB(255, 236, 233, 233).withOpacity(.2),
                         fontWeight: FontWeight.bold))),
             SizedBox(height: 30.0),
             Center(child: ProfileRating()),
             SizedBox(height: 20.0),
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('My Task',
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'OpenSans')),
-                  SizedBox(height: 10.0),
-                  Wrap(
-                    children: List.generate(4, (_) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(0.0),
-                          leading: Container(
-                            width: 50.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(60.0),
-                                gradient: LinearGradient(colors: [
-                                  RecehanColors.red,
-                                  RecehanColors.redWarm
-                                ])),
-                          ),
-                          title: Text('Lets Done Project'),
-                          subtitle: Text('We Have More Project'),
-                        ),
-                      );
-                    }),
-                  )
-                ],
-              ),
-            )
+            
           ])),
         ],
       ),
@@ -121,7 +89,7 @@ void _getUserInfo()async{
 class ProfileViewAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color.fromARGB(0, 224, 166, 41),
       leading: Container(
         padding: EdgeInsets.all(10.0),
         child: IconButton(

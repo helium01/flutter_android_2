@@ -9,16 +9,17 @@ import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/keranjang/keranjang.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class tambah_keranjang extends StatefulWidget{
+class tambah_keranjangh extends StatefulWidget{
   final String id;
-  tambah_keranjang({
+  tambah_keranjangh({
     required this.id,
   });
+  @override
   _tambah_keranjang createState() => _tambah_keranjang(id: id);
 }
 
-class _tambah_keranjang extends State<tambah_keranjang> {
-  // const tambah_keranjang({super.key});
+class _tambah_keranjang extends State<tambah_keranjangh> {
+  // const _tambah_keranjang({super.key});
   bool _isLoading = false;
  late int id_user,id_barang,jumlah_barang;
  late String kode_barang,nama_barang,tanggal;
@@ -27,6 +28,7 @@ class _tambah_keranjang extends State<tambah_keranjang> {
   final String id;
   _tambah_keranjang({
     required this.id,
+    // super.key
   });
 @override
 void initState(){
@@ -80,11 +82,19 @@ showHide(){
       appBar: AppBar(
         title: Text("keranjang philea florist bali"),
       ),
-      body: Form(
+      body: ListView(
+        children: <Widget>[
+Form(
         key: _formKey,
-        child: Container(
+        child: SingleChildScrollView(
+          child: Container(
           padding: EdgeInsets.all(20.0),
-          child: FutureBuilder<Bunga2>(
+          child: Column(
+            children: [
+              Card(
+                child: Padding(
+                  padding: EdgeInsets.all(24),
+                  child: FutureBuilder<Bunga2>(
                     future: coba,
                     builder: (context, snapshot) {
                       // print("kok bisa ya");
@@ -171,6 +181,26 @@ showHide(){
               ),
               SizedBox(height: 18),
               TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: new InputDecoration(
+                  hintText: "contoh: fajar yuris",
+                  labelText: "jumlah barang",
+                  icon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0)),
+                ),
+                // readOnly: true , 
+                initialValue: 1.toString(),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  jumlah_barang=int.parse(value);
+                  return null;
+                },
+              ),
+              SizedBox(height: 18),
+              TextFormField(
                 decoration: new InputDecoration(
                   hintText: "contoh: fajar yuris",
                   labelText: "tanggal",
@@ -188,29 +218,22 @@ showHide(){
                   return null;
                 },
               ),
-              SizedBox(height: 18),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "contoh: fajar yuris",
-                  labelText: "jumlah barang",
-                  icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Nama tidak boleh kosong';
-                  }
-                  jumlah_barang=int.parse(value);
-                  return null;
-                },
-              ),
-              SizedBox(height: 18),
+              
+              SizedBox(height: 50),
               ElevatedButton(
-                child: Text(
-                  "Submit",
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                            child: Text(
+                              _isLoading? 'Proccessing..' : 'submit',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _keranjang(id_user);
@@ -228,11 +251,21 @@ showHide(){
                 },
 
               ),
+                ),
+              )
+            ],
+          )
+          
+          
           
           
           
         ),
+        )
       ),
+        ],
+      )
+      
     );
   }
   void _keranjang(id)async{
@@ -259,16 +292,6 @@ showHide(){
               builder: (context) => keranjang()
           ),
       );
-    }else{
-      if(body['message']['name'] != null){
-        _showMsg(body['message']['name'][0].toString());
-      }
-      else if(body['message']['email'] != null){
-        _showMsg(body['message']['email'][0].toString());
-      }
-      else if(body['message']['password'] != null){
-        _showMsg(body['message']['password'][0].toString());
-      }
     }
 
     setState(() {

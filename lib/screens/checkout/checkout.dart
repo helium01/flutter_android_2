@@ -27,7 +27,7 @@ class _Checkout extends State<Checkout> {
     required this.id,
   });
   bool _isLoading = false;
-  late int id_user,id_barang,jumlah_barang,harga;
+  late int id_user,id_barang,jumlah_barang,harga,id_keranjang;
  late String kode_barang,nama_barang,tanggal,kurir,kota,kabupaten;
  bool _secureText = true;
   var userdata;
@@ -63,6 +63,10 @@ showHide(){
 
   @override
   Widget build(BuildContext context) {
+    if(userdata==null){
+      return const CircularProgressIndicator();
+    }
+    print(id);
     final baseUrl='http://fajar.patusaninc.com/api/v1/order/'+id;
   Future<List<Checkoutt>> getDetailBunga()async{
   // print(baseUrl+id);
@@ -81,12 +85,14 @@ showHide(){
   }
   late Future<List<Checkoutt>> coba;
   coba=getDetailBunga();
+  
      final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         title: Text("checkout philea florist bali"),
       ),
-      body: ListView(
+      body: Stack(children: [
+        ListView(
           padding: EdgeInsets.all(20),
           children: <Widget>[
             Form(
@@ -102,6 +108,27 @@ showHide(){
                         return Column(
             children: [
               // TextField(),
+              TextFormField(
+                decoration: new InputDecoration(
+                  
+                  hintText: "contoh: 1",
+                  labelText: "id keranjang",
+                  icon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(5.0)),
+                ),
+                readOnly: true,
+                initialValue: "${isidata[0].id}",
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nama tidak boleh kosong';
+                  }
+                  id_keranjang=int.parse(value);
+                  return null;
+                },
+              ),
+
+              SizedBox(height: 18,),
               TextFormField(
                 decoration: new InputDecoration(
                   
@@ -318,6 +345,9 @@ showHide(){
       ),
           ],
         ),
+      ],)
+      
+      
       
       
       
@@ -334,12 +364,13 @@ showHide(){
       'id_barang' : id_barang,
       'kode_barang' : kode_barang,
       'nama_barang' :nama_barang,
-      'jenis_pengiriman' : kurir,
+      'kurir' : kurir,
       'kota' : kota,
       'kabupaten' :kota,
       'total_harga' :harga,
       'tanggal' :tanggal,
-      'jumlah_barang' :jumlah_barang
+      'jumlah_barang' :jumlah_barang,
+      'id_keranjang':id_keranjang
     };
     // print(data);
     var res = await Network().authDataPost(data, '/post/checkout');

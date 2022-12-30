@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:phileaflorist/api/api.dart';
 import 'package:phileaflorist/repository/repobunga.dart';
 import 'package:phileaflorist/screens/search.dart';
 
@@ -7,11 +8,14 @@ import '../utils/all_lists.dart';
 import '../utils/app_constants.dart';
 import '../widgets/Text_widget.dart';
 import '../widgets/category_container_widget.dart';
+import '../widgets/product_display_container_widget.dart';
 import 'favorite_product.dart';
 import 'notifications.dart';
 
 class Explore extends StatelessWidget {
   final _lists = AllLists();
+   repoBunga repobunga =repoBunga();
+  late Future<List<Bunga>> listBunga;
 
  
  
@@ -19,6 +23,7 @@ class Explore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     listBunga=repobunga.getDataBunga();
     return Scaffold(
       backgroundColor: AppConstants.whiteColor,
       body: SafeArea(
@@ -124,24 +129,45 @@ class Explore extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _lists.bungaList.length,
-                      itemBuilder: (context, index) {
-                        return CategoryContainer(
-                          categoryName:
-                              _lists.bungaList[index].nama_barang,
-                          imagePath: _lists.bungaList[index].foto,
+                    SingleChildScrollView(
+                child:Container(
+                
+                child: FutureBuilder<List<Bunga>>(
+                    future: listBunga,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        List<Bunga> isiData =snapshot.data!;
+                        return GridView.builder(
+                          
+                          shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300-4,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20),
+            itemCount: isiData.length,
+            itemBuilder: (BuildContext ctx, index) {
+              return ProductDisplayContainer(
+                
+                          id: isiData[index].id.toString(),
+                          margin: 16,
+                          imagePath: isiData[index].foto,
+                          newPrice: isiData[index].harga_akhir.toString(),
+                          oldPrice: isiData[index].harga.toString(),
+                          discount:  isiData[index].diskon.toString(),
+                          productName: isiData[index].nama_barang,
                         );
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 16,
-                        mainAxisExtent: 112,
-                      ),
-                    ),
+            });
+                      }else if (snapshot.hasError){
+                        return Text("error pak"+"${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+                
+                
+                
+              )
+              ),
                     const SizedBox(
                       height: 24,
                     ),
